@@ -5,10 +5,10 @@
 -- Otherwise you will have errors!
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
-    "first_name" VARCHAR (100) NOT NULL,
+    "first_name" VARCHAR (100),
     "last_name" VARCHAR (100),
-    "email" VARCHAR (120),
-    "username" VARCHAR (100),
+    "email" VARCHAR (120) NOT NULL,
+    "username" VARCHAR (100) NOT NULL,
     "password" VARCHAR (1000) NOT NULL
 );
 
@@ -24,7 +24,7 @@ CREATE TABLE "event" (
     "host_id" int REFERENCES "user"
 );
 
---table to store users events 
+--junction table to store user's events 
 CREATE TABLE "user_event" (
     "id" SERIAL PRIMARY KEY,
     "invited_email" VARCHAR (120) NOT NULL,
@@ -33,5 +33,20 @@ CREATE TABLE "user_event" (
     "event_id" int REFERENCES "event" NOT NULL
 );
 
---table to store the users restrictions
+--table to store the major categories of restrictions
+CREATE TABLE "restriction" (
+	"id" SERIAL PRIMARY KEY,
+	"category" VARCHAR (100) NOT NULL,
+	"details" VARCHAR (240)
+);
 
+--data for main allergy/restriction categories
+INSERT INTO "restriction" ("category","details") 
+VALUES ('Dairy', 'Milk products including cream, cheese, butter, yogurt, ghee, etc.'),('Vegetarian', 'Meat products including broth/stock, gelatin. lard, fish sauce, Worcestershire sauce, etc.'),('Wheat/Gluten', 'Wheat products may include breads, crackers, cereals, flour, gravy-if thickened with flour, etc.'),('Tree Nut','Tree nuts include almonds, walnuts, pecans, hazelnuts, pine nuts, lychee nuts, etc. NOTE: Does not include Peanuts.')
+
+--junction table to tie users to major restrictions
+CREATE TABLE "user_restriction" (
+    "id" SERIAL PRIMARY KEY,
+    "user_id" int REFERENCES "user" NOT NULL,
+    "restriction_id" int REFERENCES "restriction" NOT NULL
+);
