@@ -19,13 +19,34 @@ function* fetchUser() {
     // with an id and username set the client-side user object to let
     // the client-side code know the user is logged in
     yield put({ type: 'SET_USER', payload: response.data });
+    console.log(response.data.id);
+    yield put({type: 'FETCH_RESTRICTION', payload:{id: response.data.id}})
   } catch (error) {
     console.log('User get request failed', error);
   }
 }
 
+//fired on FETCH_PROFILE_UPDATE
+function* fetchProfileUpdate(action) {
+  try {
+    //set up values to update user and user_restriction table
+    const values = {
+      username: action.payload.username,
+      email: action.payload.email,
+      restriction: action.payload.restriction
+    };
+    console.log(action.payload);
+   
+    yield axios.put(`/profile/${action.payload.id}`, values);
+    yield ({type: 'FETCH_USER'})
+  } catch (error) {
+    console.log('User profile update failed', error);
+  }
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
+  yield takeLatest('FETCH_PROFILE_UPDATE', fetchProfileUpdate);
 }
 
 export default userSaga;

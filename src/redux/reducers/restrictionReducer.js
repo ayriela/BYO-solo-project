@@ -1,14 +1,22 @@
 
 const restrictionReducer = (state = [], action) => {
-    switch (action.type) {
-      case 'SET_RESTRICTION':
+    if(action.type==='SET_RESTRICTION') {
         return action.payload;
-      //case 'UNSET_USER':
-        //return {};
-      default:
+    } else if (action.type==='UPDATE_RESTRICTION'){
+        //loop through current state and match the id that was just updated
+        return state.map( i => {
+            if (i.id==action.payload.id){
+                //if it matches flip the active flag
+                return {...i, active: !i.active};
+            } else{
+                return i;
+            }
+        }) 
+    } else {
         return state;
     }
   };
+  
   
   // user will be on the redux state at:
   // state.user

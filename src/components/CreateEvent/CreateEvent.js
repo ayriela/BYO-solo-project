@@ -7,10 +7,15 @@ import { Checkbox, Button } from '@material-ui/core';
 
 
 
-class editProfile extends Component {
+class createEvent extends Component {
     state={
-        username: this.props.user.username,
-        email: this.props.user.email,
+        title: '',
+        date: '',
+        startTime:'',
+        endTime:'',
+        location: '',
+        alerts:'',
+        invitedEmail:'',
     }
 
     componentDidMount() {
@@ -47,17 +52,25 @@ class editProfile extends Component {
         render() {
             return (
                 <>
-                <div className="checkboxArray">
-                    {this.props.restriction.map(item=>{
-                        return <label key={item.id}>
-                            {item.category}
-                            <Checkbox  
-                            name={item.id} 
-                            checked={item.active}
-                            color="primary"
-                            variant="contained"
-                            onChange={(event)=>this.handleChange(event)} />
-                        </label>})}
+                <div className="eventForm">
+                    <label>
+                            Title
+                        <input 
+                        value={this.state.title} 
+                        onChange={(event)=>this.updateInput(event,"title")}></input>
+                    </label>
+                    <label>
+                            Date
+                        <input 
+                        value={this.state.date} 
+                        onChange={(event)=>this.updateInput(event,"date")}></input>
+                    </label>
+                    <label key={item.id}>
+                            Title
+                        <input 
+                        value={this.state.username} 
+                        onChange={(event)=>this.updateInput(event,"title")}></input>
+                    </label>
                </div>
                <div className="userInfo">
                <label>
@@ -90,4 +103,4 @@ class editProfile extends Component {
         return reduxState;
     }
 
-    export default connect(mapReduxStateToProps)(editProfile);
+    export default connect(mapReduxStateToProps)(createEvent);
