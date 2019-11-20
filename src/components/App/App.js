@@ -16,6 +16,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
+import editProfile from '../EditProfile/EditProfile';
 
 import './App.css';
 
@@ -38,6 +39,11 @@ class App extends Component {
               exact
               path="/about"
               component={AboutPage}
+            />
+             <Route
+              exact
+              path="/editProfile"
+              component={editProfile}
             />
             {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/home will show the UserPage if the user is logged in.

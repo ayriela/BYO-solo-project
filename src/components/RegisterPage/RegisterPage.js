@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 
+//for email validation
+import { ReactMultiEmail, isEmail } from 'react-multi-email';
+
 class RegisterPage extends Component {
   state = {
     username: '',
