@@ -54,22 +54,46 @@ class createEvent extends Component {
                 <>
                 <div className="eventForm">
                     <label>
-                            Title
+                            Title:
                         <input 
                         value={this.state.title} 
                         onChange={(event)=>this.updateInput(event,"title")}></input>
                     </label>
                     <label>
-                            Date
+                            Date:
                         <input 
                         value={this.state.date} 
                         onChange={(event)=>this.updateInput(event,"date")}></input>
                     </label>
-                    <label key={item.id}>
-                            Title
+                    <label>
+                            Start Time:
                         <input 
-                        value={this.state.username} 
-                        onChange={(event)=>this.updateInput(event,"title")}></input>
+                        value={this.state.startTime} 
+                        onChange={(event)=>this.updateInput(event,"startTime")}></input>
+                    </label>
+                    <label>
+                            End Time:
+                        <input 
+                        value={this.state.endTime} 
+                        onChange={(event)=>this.updateInput(event,"endTime")}></input>
+                    </label>
+                    <label>
+                            Location:
+                        <input 
+                        value={this.state.location} 
+                        onChange={(event)=>this.updateInput(event,"location")}></input>
+                    </label>
+                    <label>
+                            Alert to All Guests:
+                        <input 
+                        value={this.state.alerts} 
+                        onChange={(event)=>this.updateInput(event,"alerts")}></input>
+                    </label>
+                    <label>
+                            invitedEmail:
+                        <input 
+                        value={this.state.startTime} 
+                        onChange={(event)=>this.updateInput(event,"startTime")}></input>
                     </label>
                </div>
                <div className="userInfo">
