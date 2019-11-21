@@ -21,6 +21,7 @@ const Nav = (props) => (
       {props.user.id && (
         <>
           <Link className="nav-link" to="/editProfile">Edit Profile</Link>
+          <Link className="nav-link" to="/createEvent">Add an Event</Link>
           <Link className="nav-link" to="/info">
             Info Page
           </Link>

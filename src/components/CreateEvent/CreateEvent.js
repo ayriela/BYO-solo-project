@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 
 
 import { connect } from 'react-redux';
-import { Checkbox, Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
+
+import moment from 'moment';
+
+// import {
+//     MuiPickersUtilsProvider,
+//     KeyboardTimePicker,
+//     KeyboardDatePicker,
+//   } from '@material-ui/pickers';
 
 
 
@@ -10,43 +18,58 @@ import { Checkbox, Button } from '@material-ui/core';
 class createEvent extends Component {
     state={
         title: '',
+        description: '',
         date: '',
         startTime:'',
         endTime:'',
         location: '',
         alerts:'',
         invitedEmail:'',
+        user: this.props.user.id,
     }
+  
 
-    componentDidMount() {
-        //this.props.dispatch({ type: 'FETCH_RESTRICTION', payload: this.props.user });
-        } 
-        //update redux state for checkboxes
-    handleChange = (event) => {
-            console.log('in handle change', event.target.id);
-            this.props.dispatch({type: 'UPDATE_RESTRICTION', payload: {id: event.target.name}});
-        }
-        //update value for username or email
-
-        //update user profile details
+        //update user event details
     updateInput=(event,property) =>{
-        console.log('in update input', property, event.target.value)
+        //console.log('in update input', property, event.target.value)
         this.setState({
             ...this.state,
             [property]: event.target.value,
         });
     }
     //send all changes to database
-    submitProfile=()=>{
+    submitEvent=()=>{
+        console.log('in submit', this.state);
+        //const startDateTime= Date.parse(this.state.date+'T'+this.state.startTime);
+        //const endDateTime= Date.parse(this.state.date+'T'+this.state.endTime);
+        //  const {
+        //     title,
+        //     description,
+        //     date,
+        //     startTime,
+        //     endTime,
+        //     location,
+        //     alerts,
+        //     invitedEmail,
+        //     user,
+        //     startDateTime,
+        //     endDateTime,
+
+        const startDateTime = moment(`${this.state.date} ${this.state.startTime}`, 'YYYY-MM-DD HH:mm:ss').format();
+        const endDateTime = moment(`${this.state.date} ${this.state.endTime}`, 'YYYY-MM-DD HH:mm:ss').format();
+
+        const allValues={
+            ...this.state,
+            startDateTime: startDateTime,
+            endDateTime: endDateTime,
+        }
         
-        const profile={
-            id: this.props.user.id,
-            username: this.state.username,
-            email: this.state.email,
-            restriction: this.props.restriction, 
-        };
-        console.log('in Submit', profile);
-        this.props.dispatch({type: 'FETCH_PROFILE_UPDATE', payload: profile});
+        this.props.dispatch({type:`FETCH_UPDATE_EVENT`, payload: allValues});
+
+        console.log(startDateTime, endDateTime);
+        
+        //console.log('in Submit', profile);
+        //this.props.dispatch({type: 'FETCH_PROFILE_UPDATE', payload: profile});
     }
 
         render() {
@@ -54,45 +77,89 @@ class createEvent extends Component {
                 <>
                 <div className="eventForm">
                     <label>
-                            Title
-                        <input 
+                            Title:
+                        <TextField 
+                        variant="outlined"
                         value={this.state.title} 
-                        onChange={(event)=>this.updateInput(event,"title")}></input>
+                        onChange={(event)=>this.updateInput(event,"title")}></TextField>
                     </label>
                     <label>
-                            Date
-                        <input 
+                            Description:
+                        <TextField
+                        variant="outlined"
+                        multiline
+                        rows="3"
+                        value={this.state.description} 
+                        onChange={(event)=>this.updateInput(event,"description")}></TextField>
+                    </label>
+                    <label>
+                            Date:
+                            {/* <KeyboardDatePicker
+                                disableToolbar
+                                variant="inline"
+                                format="MM/dd/yyyy"
+                                margin="normal"
+                                id="date-picker-inline"
+                                label="Date picker"
+                                value={this.state.date}
+                                onChange={(event)=>this.updateInput(event,"date")}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                            /> */}
+                        <TextField
+                        type="date"
+                        variant="outlined"
                         value={this.state.date} 
-                        onChange={(event)=>this.updateInput(event,"date")}></input>
+                        onChange={(event)=>this.updateInput(event,"date")}></TextField> 
                     </label>
-                    <label key={item.id}>
-                            Title
-                        <input 
-                        value={this.state.username} 
-                        onChange={(event)=>this.updateInput(event,"title")}></input>
+                    <label>
+                            Start Time:
+                        <TextField
+                        type="time"
+                        variant="outlined"
+                        value={this.state.startTime} 
+                        onChange={(event)=>this.updateInput(event,"startTime")}></TextField>
                     </label>
+                    <label>
+                            End Time:
+                        <TextField
+                        type="time"
+                        variant="outlined"
+                        value={this.state.endTime} 
+                        onChange={(event)=>this.updateInput(event,"endTime")}></TextField>
+                    </label>
+                    <label>
+                            Location:
+                        <TextField 
+                        variant="outlined"
+                        value={this.state.location} 
+                        onChange={(event)=>this.updateInput(event,"location")}></TextField>
+                    </label>
+                    <label>
+                            Alert to All Guests:
+                        <TextField
+                        variant="outlined"
+                        multiline
+                        rows="6"
+                        value={this.state.alerts} 
+                        onChange={(event)=>this.updateInput(event,"alerts")}></TextField>
+                    </label>
+                    <label>
+                            Emails to invite:
+                        <TextField 
+                        variant="outlined"
+                        type="email"
+                        value={this.state.invitedEmail} 
+                        onChange={(event)=>this.updateInput(event,"invitedEmail")}></TextField>
+                    </label>
+                    <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={this.submitEvent}
+                    >Create Event</Button>
                </div>
-               <div className="userInfo">
-               <label>
-                   Username:
-                    <input 
-                    value={this.state.username} 
-                    onChange={(event)=>this.updateInput(event,"username")}></input>
-                </label>
-               <label>
-                   Email:
-                    <input 
-                    value={this.state.email} 
-                    onChange={(event)=>this.updateInput(event,"email")}></input>
-                </label>
-                <Button
-                color="primary"
-                variant="contained"
-                onClick={this.submitProfile}
-                >Update Profile</Button>
-                    {JSON.stringify(this.props.restriction, null, 2)}
-                </div>
-                </>
+            </>
             );
         }
     }
