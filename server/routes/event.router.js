@@ -49,7 +49,26 @@ router.post('/', async (req, res) => {
     invitedEmail:'',
     user: this.props.user.id,
 } */
-//get restriction details for the particular user
+
+/** 
+ * GET USER'S INVITED EVENTS
+**/
+router.get(`/invites`, async(req,res)=>{
+    console.log('in event invite get');
+    const queryText=`SELECT e.id, e.title, e.start_time, e.host_id FROM "event" e 
+    JOIN user_event ue ON ue.event_id=e.id
+    JOIN "user" u ON ue.invited_email=u.email
+    WHERE u.id=$1`
+    const queryValues=[req.user.id];
+    
+    pool.query(queryText,queryValues
+        ).then(results=>{
+            res.send(results.rows);
+        }).catch((error)=>{
+            console.log('Error GET /event/invites', error);
+            res.sendStatus(500);
+        })
+})
 
 
 /**

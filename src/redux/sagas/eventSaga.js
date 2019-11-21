@@ -30,8 +30,18 @@ function* fetchEventUpdate(action) {
     }
   }
    */
+
+   function* fetchInvites(){
+       try{
+        const invites=yield axios.get('/event/invites');
+        yield put({ type: 'SET_INVITES', payload: invites.data});
+       } catch (error) {
+        console.log('Error getting users invites:', error);
+    }
+   }
   function* eventSaga() {
     yield takeEvery('FETCH_UPDATE_EVENT', fetchEventUpdate);
+    yield takeEvery('FETCH_INVITES', fetchInvites);
     //yield takelatest('FETCH_USER_RESTRICTION', userRestrictionFetch);
   }
   
