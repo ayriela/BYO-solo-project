@@ -17,21 +17,54 @@ function* fetchEventUpdate(action) {
     }
   }
 
-  /* function* restrictionUserFetch(action) {
-    try {
-    //get major restrictions from database
-      const restrictions = yield axios.get(`/restriction/${action.payload.id}`);
-    //set to redux state
-      yield put({ type: 'SET_RESTRICTION', payload: restrictions.data });
-
-    } catch (error) {
-        console.log('Error getting restrictions:', error);
-        //yield put({type: 'REGISTRATION_FAILED'});
+  
+  //grabs list of all the events the user is invited to
+   function* fetchInvites(){
+       try{
+        const invites=yield axios.get('/event/invites');
+        yield put({ type: 'SET_INVITES', payload: invites.data});
+       } catch (error) {
+        console.log('Error getting users invites:', error);
+        }
     }
-  }
-   */
+
+    //user accepts the invite 
+    function* fetchInviteAccept(action){
+        try{
+            yield axios.put('/event/accept', action.payload);
+            yield put({type: 'FETCH_INVITES'});
+        }catch (error) {
+            console.log('Error accepting the invitation:', error);
+        }
+    }
+
+    //grab the list of all events the user is attending 
+    function* fetchAttending(){
+        try{
+         const attending=yield axios.get('/event/attending');
+         yield put({ type: 'SET_ATTENDING', payload: attending.data});
+        } catch (error) {
+         console.log('Error getting users invites:', error);
+         }
+     }
+
+     //grab the list of all events the user is hosting
+     function* fetchHosting(){
+        try{
+         const hosting=yield axios.get('/event/hosting');
+         yield put({ type: 'SET_HOSTING', payload: hosting.data});
+        } catch (error) {
+         console.log('Error getting users invites:', error);
+         }
+     }
+
   function* eventSaga() {
     yield takeEvery('FETCH_UPDATE_EVENT', fetchEventUpdate);
+    yield takeEvery('FETCH_INVITES', fetchInvites);
+    yield takeEvery('FETCH_INVITE_ACCEPT', fetchInviteAccept);
+    yield takeEvery('FETCH_ATTENDING', fetchAttending);
+    yield takeEvery('FETCH_HOSTING', fetchHosting);
+    
     //yield takelatest('FETCH_USER_RESTRICTION', userRestrictionFetch);
   }
   
