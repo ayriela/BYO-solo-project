@@ -97,7 +97,21 @@ router.get('/attending', (req,res)=>{
         ).then(results=>{
             res.send(results.rows);
         }).catch((error)=>{
-            console.log('Error GET /event/invites', error);
+            console.log('Error GET /event/attending', error);
+            res.sendStatus(500);
+        })
+
+})
+
+router.get('/hosting', (req,res)=>{
+    const queryText=`select * from "event" 
+    WHERE host_id=$1`;
+    const queryValues=[req.user.id];
+    pool.query(queryText,queryValues
+        ).then(results=>{
+            res.send(results.rows);
+        }).catch((error)=>{
+            console.log('Error GET /event/hosting', error);
             res.sendStatus(500);
         })
 

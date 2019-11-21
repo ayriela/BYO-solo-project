@@ -1,0 +1,13 @@
+.userHome-left, .userHome-right {
+    width: 40%;
+}
+.createButton{
+    margin: 5px;
+    width: 100%;
+}
+.userHome-left{
+    align-content: left;
+}
+.userHome-right{
+    align-content:right;
+}

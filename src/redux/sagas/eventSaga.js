@@ -48,11 +48,23 @@ function* fetchEventUpdate(action) {
          }
      }
 
+     //grab the list of all events the user is hosting
+     function* fetchHosting(){
+        try{
+         const hosting=yield axios.get('/event/hosting');
+         yield put({ type: 'SET_HOSTING', payload: hosting.data});
+        } catch (error) {
+         console.log('Error getting users invites:', error);
+         }
+     }
+
   function* eventSaga() {
     yield takeEvery('FETCH_UPDATE_EVENT', fetchEventUpdate);
     yield takeEvery('FETCH_INVITES', fetchInvites);
     yield takeEvery('FETCH_INVITE_ACCEPT', fetchInviteAccept);
     yield takeEvery('FETCH_ATTENDING', fetchAttending);
+    yield takeEvery('FETCH_HOSTING', fetchHosting);
+    
     //yield takelatest('FETCH_USER_RESTRICTION', userRestrictionFetch);
   }
   
