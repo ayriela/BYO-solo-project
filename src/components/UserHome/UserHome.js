@@ -30,7 +30,7 @@ class userHome extends Component {
 
     accceptInvite=(id)=>{
         console.log('event: ', id);
-
+        this.props.dispatch({type:'FETCH_INVITE_ACCEPT', payload:{eventId: id}});
     }
 
         render() {

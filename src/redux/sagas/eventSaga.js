@@ -30,18 +30,30 @@ function* fetchEventUpdate(action) {
     }
   }
    */
-
+  //grabs list of all the events the user is invited to
    function* fetchInvites(){
        try{
         const invites=yield axios.get('/event/invites');
         yield put({ type: 'SET_INVITES', payload: invites.data});
        } catch (error) {
         console.log('Error getting users invites:', error);
+        }
     }
-   }
+
+    //user accepts the invite 
+    function* fetchInviteAccept(action){
+        try{
+            yield axios.put('/event/accept', action.payload);
+            yield put({type: 'FETCH_INVITES'});
+        }catch (error) {
+            console.log('Error accepting the invitation:', error);
+        }
+    }
+
   function* eventSaga() {
     yield takeEvery('FETCH_UPDATE_EVENT', fetchEventUpdate);
     yield takeEvery('FETCH_INVITES', fetchInvites);
+    yield takeEvery('FETCH_INVITE_ACCEPT', fetchInviteAccept)
     //yield takelatest('FETCH_USER_RESTRICTION', userRestrictionFetch);
   }
   

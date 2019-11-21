@@ -54,11 +54,11 @@ router.post('/', async (req, res) => {
  * GET USER'S INVITED EVENTS
 **/
 router.get(`/invites`, async(req,res)=>{
-    console.log('in event invite get');
+    //console.log('in event invite get');
     const queryText=`SELECT e.id, e.title, e.start_time, e.host_id FROM "event" e 
     JOIN user_event ue ON ue.event_id=e.id
     JOIN "user" u ON ue.invited_email=u.email
-    WHERE u.id=$1`
+    WHERE u.id=$1 AND  ue.attending IS NULL`
     const queryValues=[req.user.id];
     
     pool.query(queryText,queryValues
@@ -70,12 +70,28 @@ router.get(`/invites`, async(req,res)=>{
         })
 })
 
+/**
+ * PUT to flip invite to ATTENDING=true and add user_id
+ **/
+router.put('/accept', (req,res)=>{
+    console.log('in event accept invite put');
+    const queryText=`UPDATE "user_event" SET "user_id"=$1 , "attending"=TRUE WHERE "event_id"=$2`;
+    const queryValues=[req.user.id, req.body.eventId]
+    pool.query(queryText,queryValues
+        ).then(
+            res.sendStatus(200)
+        ).catch((error)=>{
+            console.log('Error PUT /event/accept', error);
+            res.sendStatus(500);
+        })
+})
+
 
 /**
  * POST route template
  */
 router.post('/', async (req, res) => {
-    console.log('in event post');
+    //console.log('in event post');
     const client = await pool.connect();
     try {
         const {
