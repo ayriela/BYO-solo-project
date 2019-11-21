@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 
 import { connect } from 'react-redux';
-import { Button, TextField, Paper, Typography } from '@material-ui/core';
+import { Button, TextField, Paper, Typography, Card, CardContent, CardActionArea, CardActions } from '@material-ui/core';
 
 import moment from 'moment';
 
@@ -13,6 +13,7 @@ class userHome extends Component {
     }
     componentDidMount(){
         this.props.dispatch({type: `FETCH_INVITES`});
+        this.props.dispatch({type: 'FETCH_ATTENDING'});
     }
 
         //update user event details
@@ -31,6 +32,7 @@ class userHome extends Component {
     accceptInvite=(id)=>{
         console.log('event: ', id);
         this.props.dispatch({type:'FETCH_INVITE_ACCEPT', payload:{eventId: id}});
+        
     }
 
         render() {
@@ -53,7 +55,45 @@ class userHome extends Component {
                     <div className="userHome-left">
                     <Paper><h2>Events you're Attending</h2></Paper>
                     <div styles="width:150px;height:150px;line-height:3em;overflow:auto;padding:5px;">
-
+                        {this.props.eventAttending.map(event=>{
+                            return <Card className="eventCard">
+                            <CardActionArea>
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  {event.title}
+                                </Typography>
+                                <div className="dateDisplay">
+                                    <h4>{moment(event.start_time).format('MMM')}, 
+                                    {moment(event.start_time).format('YYYY')}
+                                    </h4>
+                                    <div className="dayDisplay">
+                                        {moment(event.start_time).format('DD')}
+                                    </div>
+                                </div>
+                                
+                                <Typography variant="body2" color="textSecondary" component="p">
+                                  {event.details}
+                                </Typography>
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+                              <Button 
+                              size="small" 
+                              onClick={this.removeRSVP}
+                              variant="outlined"
+                              color="primary">
+                                Remove RSVP
+                              </Button>
+                              <Button 
+                              onClick=
+                              size="small" 
+                              variant="contained"
+                              color="primary">
+                                See More Details
+                              </Button>
+                            </CardActions>
+                          </Card>
+                        })}
                     </div>
                     </div>
                     <div className="userHome-right">

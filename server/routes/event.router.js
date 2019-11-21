@@ -86,6 +86,22 @@ router.put('/accept', (req,res)=>{
         })
 })
 
+//get list of events the user is attending 
+router.get('/attending', (req,res)=>{
+    const queryText=`select e.* from "event" e 
+    JOIN user_event ue ON ue.event_id=e.id
+    JOIN "user" u ON ue.user_id=u.id
+    WHERE u.id=$1 AND ue.attending=TRUE`;
+    const queryValues=[req.user.id];
+    pool.query(queryText,queryValues
+        ).then(results=>{
+            res.send(results.rows);
+        }).catch((error)=>{
+            console.log('Error GET /event/invites', error);
+            res.sendStatus(500);
+        })
+
+})
 
 /**
  * POST route template
