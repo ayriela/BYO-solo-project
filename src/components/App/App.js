@@ -9,7 +9,7 @@ import {
 import {connect} from 'react-redux';
 
 import Nav from '../Nav/Nav';
-import Footer from '../Footer/Footer';
+//import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 
@@ -19,6 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import editProfile from '../EditProfile/EditProfile';
 import createEvent from '../CreateEvent/CreateEvent';
 import userHome from '../UserHome/UserHome';
+import eventDetails from  '../EventDetails/EventDetails';
 
 import './App.css';
 
@@ -57,6 +58,11 @@ class App extends Component {
               path="/userHome"
               component={userHome}
             />
+              <Route
+              exact
+              path="/eventDetails"
+              component={eventDetails}
+            />
             {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/home will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the 'Login' or 'Register' page.
@@ -76,7 +82,7 @@ class App extends Component {
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
           </Switch>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </Router>
   )}

@@ -2,53 +2,6 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-/* 
-router.post('/', async (req, res) => {
-    const client = await pool.connect();
-
-    try {
-        const {
-            customer_name,
-            street_address,
-            city,
-            zip,
-            type,
-            total,
-            pizzas
-        } = req.body;
-        await client.query('BEGIN')
-        const orderInsertResults = await client.query(`INSERT INTO "orders" ("customer_name", "street_address", "city", "zip", "type", "total")
-        VALUES ($1, $2, $3, $4, $5, $6)
-        RETURNING id;`, [customer_name, street_address, city, zip, type, total]);
-        const orderId = orderInsertResults.rows[0].id;
-
-        await Promise.all(pizzas.map(pizza => {
-            const insertLineItemText = `INSERT INTO "line_item" ("order_id", "pizza_id", "quantity") VALUES ($1, $2, $3)`;
-            const insertLineItemValues = [orderId, pizza.id, pizza.quantity];
-            return client.query(insertLineItemText, insertLineItemValues);
-        }));
-
-        await client.query('COMMIT')
-        res.sendStatus(201);
-    } catch (error) {
-        await client.query('ROLLBACK')
-        console.log('Error POST /api/order', error);
-        res.sendStatus(500);
-    } finally {
-        client.release()
-    }
-}); */
-/* state={
-    title: '',
-    description: '',
-    date: '',
-    startTime:'',
-    endTime:'',
-    location: '',
-    alerts:'',
-    invitedEmail:'',
-    user: this.props.user.id,
-} */
 
 /** 
  * GET USER'S INVITED EVENTS
@@ -75,8 +28,8 @@ router.get(`/invites`, async(req,res)=>{
  **/
 router.put('/accept', (req,res)=>{
     console.log('in event accept invite put');
-    const queryText=`UPDATE "user_event" SET "user_id"=$1 , "attending"=TRUE WHERE "event_id"=$2`;
-    const queryValues=[req.user.id, req.body.eventId]
+    const queryText=`UPDATE "user_event" SET "user_id"=$1, "attending"=TRUE WHERE "event_id"=$2`;
+    const queryValues=[req.user.id, req.body.eventId];
     pool.query(queryText,queryValues
         ).then(
             res.sendStatus(200)
@@ -86,8 +39,25 @@ router.put('/accept', (req,res)=>{
         })
 })
 
+/**
+ * PUT to flip invite to ATTENDING=false 
+ **/
+router.put('/reject', (req,res)=>{
+    console.log('in event reject invite put');
+    const queryText=`UPDATE "user_event" SET "attending"=FALSE WHERE "event_id"=$2 AND user_id=$1`;
+    const queryValues=[req.user.id, req.body.eventId];
+    pool.query(queryText,queryValues
+        ).then(
+            res.sendStatus(200)
+        ).catch((error)=>{
+            console.log('Error PUT /event/reject', error);
+            res.sendStatus(500);
+        })
+})
+
 //get list of events the user is attending 
 router.get('/attending', (req,res)=>{
+    //get for the current user and only events where attedning is true 
     const queryText=`select e.* from "event" e 
     JOIN user_event ue ON ue.event_id=e.id
     JOIN "user" u ON ue.user_id=u.id
@@ -118,7 +88,7 @@ router.get('/hosting', (req,res)=>{
 })
 
 /**
- * POST route template
+ * POST route
  */
 router.post('/', async (req, res) => {
     //console.log('in event post');
@@ -142,9 +112,14 @@ router.post('/', async (req, res) => {
         await client.query('BEGIN');
         const addQuery=`INSERT INTO "event" ( "title" , "description" , "location" , "start_time" , "end_time" , "host_messages" , "host_id") 
         VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;`
-        const addValues=[title, description, location, startDateTime,endDateTime, alerts, user];
+        const addValues=[title, description, location, startDateTime, endDateTime, alerts, user];
         const eventAdded=await client.query(addQuery,addValues);
         const eventId = eventAdded.rows[0].id;
+
+        //add event host to the user_event table and flag as attending-->NEEDS EMAIL because NOT NULL CONSTRAINT NOT NECESSARY ANYMORE
+        // const hostEventAdd=`INSERT INTO "user_event" ( "user_id", "event_id", "attending") VALUES ($1, $2, TRUE)`;
+        // const hostEventValues=[req.user.id, eventId];
+        // await client.query(hostEventAdd,hostEventValues);
 
         //add invitation to the user_event table
         const userEventAdd=`INSERT INTO "user_event" ( "invited_email", "event_id" ) VALUES ($1, $2)`;

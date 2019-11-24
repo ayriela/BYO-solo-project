@@ -6,8 +6,8 @@
     width: 100%;
 }
 .userHome-left{
-    align-content: left;
+    float: left;
 }
 .userHome-right{
-    align-content:right;
+    float:right;
 }
