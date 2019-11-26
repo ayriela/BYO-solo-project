@@ -49,6 +49,17 @@ function* fetchEventUpdate(action) {
         }
     }
 
+      //host cancels the whole event 
+      function* fetchCancelEvent(action){
+          console.log('in cancel event', action.payload.eventId);
+        try {
+            yield axios.delete(`/event/${action.payload.eventId}`);
+            yield put({type: 'FETCH_HOSTING'});
+        } catch (error) {
+            console.log('Error canceling the event:', error);
+        }
+    }
+
     //grab the list of all events the user is attending 
     function* fetchAttending(){
         try{
@@ -76,7 +87,7 @@ function* fetchEventUpdate(action) {
     yield takeEvery('FETCH_ATTENDING', fetchAttending);
     yield takeEvery('FETCH_HOSTING', fetchHosting);
     yield takeEvery('FETCH_INVITE_REJECT', fetchInviteReject);
-    
+    yield takeEvery('FETCH_CANCEL_EVENT', fetchCancelEvent);
     //yield takelatest('FETCH_USER_RESTRICTION', userRestrictionFetch);
   }
   

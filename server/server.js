@@ -14,6 +14,7 @@ const restrictionRouter = require('./routes/restriction.router');
 const profileRouter = require('./routes/profile.router');
 const eventRouter = require('./routes/event.router');
 const detailRouter = require('./routes/detail.router');
+const foodRouter = require('./routes/food.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -32,6 +33,7 @@ app.use('/restriction', restrictionRouter);
 app.use('/profile', profileRouter);
 app.use('/event', eventRouter);
 app.use('/detail', detailRouter);
+app.use('/food', foodRouter);
 
 // Serve static files
 app.use(express.static('build'));

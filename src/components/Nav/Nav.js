@@ -23,6 +23,7 @@ const Nav = (props) => (
           <Link className="nav-link" to="/editProfile">Edit Profile</Link>
           <Link className="nav-link" to="/createEvent">Add an Event</Link>
           <Link className="nav-link" to="/userHome">Go to my Home Page</Link>
+          <Link className="nav-link" to="/addFood">Add Food Form</Link>
           <Link className="nav-link" to="/info">
             Info Page
           </Link>

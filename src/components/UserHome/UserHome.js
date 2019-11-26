@@ -19,6 +19,8 @@ class userHome extends Component {
         this.props.dispatch({type: `FETCH_INVITES`});
         this.props.dispatch({type: 'FETCH_ATTENDING'});
         this.props.dispatch({type: 'FETCH_HOSTING'});
+          //and get the full restriction list information
+        this.props.dispatch({type: 'FETCH_ALL_RESTRICTION'});
     }
 
         //update user event details
@@ -29,6 +31,7 @@ class userHome extends Component {
     //         [property]: event.target.value,
     //     });
     // }
+
     //send all changes to database
     createEvent=()=>{
      console.log('in create event');
@@ -47,6 +50,7 @@ class userHome extends Component {
 
     cancelEvent=(id)=>{
         console.log('in cancel event', id);
+        this.props.dispatch({type:'FETCH_CANCEL_EVENT', payload:{eventId: id}});
     }
 
     routeToDetails=(eventDetail)=>{

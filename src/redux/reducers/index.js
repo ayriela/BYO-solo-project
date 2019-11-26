@@ -9,6 +9,8 @@ import eventHosting from './eventHostingReducer';
 import detailCount from './detailCountReducer';
 import detailRestriction from './detailRestrictionReducer';
 import selectedEvent from './selectedEventReducer';
+import allRestriction from './allRestrictionReducer';
+import newFood from './newFoodReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -27,6 +29,8 @@ const rootReducer = combineReducers({
   detailCount,
   detailRestriction,
   selectedEvent,
+  allRestriction,
+  newFood,
 });
 
 export default rootReducer;

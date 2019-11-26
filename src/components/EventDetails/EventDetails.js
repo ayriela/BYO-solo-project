@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 
 
 import { connect } from 'react-redux';
-import { Button, TextField, Paper, Typography, Card, CardContent, CardActionArea, CardActions } from '@material-ui/core';
+import { Button, TextField, Paper, Typography, Card, CardContent, CardActionArea, CardActions , Dialog} from '@material-ui/core';
 
 import moment from 'moment';
+
+import DetailFooter from '../DetailFooter/DetailFooter';
+import AddFood from '../AddFood/AddFood';
 
 import './EventDetails.css'
 
 class userHome extends Component {
-    state={
-      
-    }
     componentDidMount(){
         //this.props.dispatch({type: `FETCH_INVITES`});
         //this.props.dispatch({type: 'FETCH_ATTENDING'});
         //this.props.dispatch({type: 'FETCH_HOSTING'});
-        
+        //this.props.dispatch({type: 'FETCH_ALL_RESTRICTIONS'});
     }
 
    
@@ -31,17 +31,34 @@ class userHome extends Component {
         
     }
 
-    removeRSVP=(id)=>{
-        console.log('in remove rsvp', id);
-    }
+    // removeRSVP=(id)=>{
+    //     console.log('in remove rsvp', id);
+    // }
 
-    cancelEvent=(id)=>{
-        console.log('in cancel event', id);
-    }
+    // cancelEvent=(id)=>{
+    //     console.log('in cancel event', id);
+    // }
 
-    routeToDetails=(id)=>{
-        console.log('in route to details', id);
-    }
+    // routeToDetails=(id)=>{
+    //     console.log('in route to details', id);
+    // }
+
+    //function to open dialog
+    //  openDialog=()=>{
+    //     this.setState({
+    //         dialog: true,
+    //     });
+    // }
+    // //function to close dialog, reset redux, and route to home
+    // closeDialog=()=>{
+    //     this.setState({
+    //         dialog: false,
+    //     });
+    //     //reset the redux state
+    //     //this.props.dispatch({type: 'RESET'});
+    //     //this.props.history.push(this.props.direction.f);
+
+    // }
 
         render() {
             return (
@@ -90,7 +107,10 @@ class userHome extends Component {
                     </Paper>
                     
                     </div>
-                    {/*JSON.stringify(this.props, null, 2)*/}
+                    <div className="detailActionArea">
+                        <DetailFooter close={this.closeDialog}/>
+                    </div>
+               
                </div>
             </>
             );

@@ -20,6 +20,7 @@ import editProfile from '../EditProfile/EditProfile';
 import createEvent from '../CreateEvent/CreateEvent';
 import userHome from '../UserHome/UserHome';
 import eventDetails from  '../EventDetails/EventDetails';
+import addFood from '../AddFood/AddFood';
 
 import './App.css';
 
@@ -62,6 +63,11 @@ class App extends Component {
               exact
               path="/eventDetails"
               component={eventDetails}
+            />
+             <Route
+              exact
+              path="/addFood"
+              component={addFood}
             />
             {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/home will show the UserPage if the user is logged in.
