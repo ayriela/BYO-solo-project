@@ -77,7 +77,7 @@ class editProfile extends Component {
                 variant="contained"
                 onClick={this.submitProfile}
                 >Update Profile</Button>
-                    {JSON.stringify(this.props.restriction, null, 2)}
+                    {/* {JSON.stringify(this.props.restriction, null, 2)} */}
                 </div>
                 </>
             );

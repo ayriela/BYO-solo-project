@@ -19,7 +19,7 @@ function* fetchUser() {
     // with an id and username set the client-side user object to let
     // the client-side code know the user is logged in
     yield put({ type: 'SET_USER', payload: response.data });
-    console.log(response.data.id);
+    console.log('in fetchUser', response.data.id);
     yield put({type: 'FETCH_RESTRICTION', payload:{id: response.data.id}})
   } catch (error) {
     console.log('User get request failed', error);
@@ -35,10 +35,10 @@ function* fetchProfileUpdate(action) {
       email: action.payload.email,
       restriction: action.payload.restriction
     };
-    console.log(action.payload);
+    console.log('in fetchProfileUpdate', action.payload.id);
    
     yield axios.put(`/profile/${action.payload.id}`, values);
-    yield ({type: 'FETCH_USER'})
+    yield put({type: 'FETCH_USER'})
   } catch (error) {
     console.log('User profile update failed', error);
   }

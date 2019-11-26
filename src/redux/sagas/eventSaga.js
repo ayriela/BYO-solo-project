@@ -30,11 +30,33 @@ function* fetchEventUpdate(action) {
 
     //user accepts the invite 
     function* fetchInviteAccept(action){
-        try{
+        try {
             yield axios.put('/event/accept', action.payload);
             yield put({type: 'FETCH_INVITES'});
-        }catch (error) {
+            yield put({type: 'FETCH_ATTENDING'})
+        } catch (error) {
             console.log('Error accepting the invitation:', error);
+        }
+    }
+
+      //user turns down the invite 
+      function* fetchInviteReject(action){
+        try {
+            yield axios.put('/event/reject', action.payload);
+            yield put({type: 'FETCH_ATTENDING'})
+        } catch (error) {
+            console.log('Error rejecting the invitation:', error);
+        }
+    }
+
+      //host cancels the whole event 
+      function* fetchCancelEvent(action){
+          console.log('in cancel event', action.payload.eventId);
+        try {
+            yield axios.delete(`/event/${action.payload.eventId}`);
+            yield put({type: 'FETCH_HOSTING'});
+        } catch (error) {
+            console.log('Error canceling the event:', error);
         }
     }
 
@@ -64,7 +86,8 @@ function* fetchEventUpdate(action) {
     yield takeEvery('FETCH_INVITE_ACCEPT', fetchInviteAccept);
     yield takeEvery('FETCH_ATTENDING', fetchAttending);
     yield takeEvery('FETCH_HOSTING', fetchHosting);
-    
+    yield takeEvery('FETCH_INVITE_REJECT', fetchInviteReject);
+    yield takeEvery('FETCH_CANCEL_EVENT', fetchCancelEvent);
     //yield takelatest('FETCH_USER_RESTRICTION', userRestrictionFetch);
   }
   

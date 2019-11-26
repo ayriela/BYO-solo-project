@@ -1,4 +1,4 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 
 
@@ -15,6 +15,19 @@ function* restrictionFetch(action) {
     }
   }
 
+//get all the restriction detail
+function* allRestrictionFetch() {
+  try {
+  //get major restrictions from database
+    const restriction = yield axios.get(`/restriction/all`);
+  //set to redux state
+    yield put({ type: 'SET_RESTRICTION_DETAIL', payload: restriction.data });
+
+  } catch (error) {
+      console.log('Error getting all restriction detail:', error);
+  }
+}
+
   /* function* restrictionUserFetch(action) {
     try {
     //get major restrictions from database
@@ -30,6 +43,7 @@ function* restrictionFetch(action) {
    */
   function* restrictionSaga() {
     yield takeLatest('FETCH_RESTRICTION', restrictionFetch);
+    yield takeEvery('FETCH_ALL_RESTRICTION', allRestrictionFetch)
     //yield takelatest('FETCH_USER_RESTRICTION', userRestrictionFetch);
   }
   

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-
+import {withRouter} from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { Button, TextField, Paper, Typography, Card, CardContent, CardActionArea, CardActions } from '@material-ui/core';
+
+import eventDetails from '../EventDetails/EventDetails';
 
 import moment from 'moment';
 
@@ -17,6 +19,8 @@ class userHome extends Component {
         this.props.dispatch({type: `FETCH_INVITES`});
         this.props.dispatch({type: 'FETCH_ATTENDING'});
         this.props.dispatch({type: 'FETCH_HOSTING'});
+          //and get the full restriction list information
+        this.props.dispatch({type: 'FETCH_ALL_RESTRICTION'});
     }
 
         //update user event details
@@ -27,6 +31,7 @@ class userHome extends Component {
     //         [property]: event.target.value,
     //     });
     // }
+
     //send all changes to database
     createEvent=()=>{
      console.log('in create event');
@@ -40,14 +45,23 @@ class userHome extends Component {
 
     removeRSVP=(id)=>{
         console.log('in remove rsvp', id);
+        this.props.dispatch({type:'FETCH_INVITE_REJECT', payload:{eventId: id}});
     }
 
     cancelEvent=(id)=>{
         console.log('in cancel event', id);
+        this.props.dispatch({type:'FETCH_CANCEL_EVENT', payload:{eventId: id}});
     }
 
-    routeToDetails=(id)=>{
-        console.log('in route to details', id);
+    routeToDetails=(eventDetail)=>{
+        
+        this.props.dispatch({type: 'SET_SELECTED_EVENT', payload: eventDetail});
+        console.log('in route to details', eventDetail);
+        this.props.dispatch({type: 'FETCH_DETAIL_COUNT', payload:{id: eventDetail.id}});
+        this.props.dispatch({type: 'FETCH_DETAIL_RESTRICTION', payload:{id: eventDetail.id}});
+    
+        this.props.history.push('/eventDetails');
+        
     }
 
         render() {
@@ -102,7 +116,7 @@ class userHome extends Component {
                                 Remove RSVP
                               </Button>
                               <Button 
-                              onClick={()=>this.routeToDetails(event.id)}
+                              onClick={()=>this.routeToDetails(event)}
                               size="small" 
                               variant="contained"
                               color="primary">
@@ -146,7 +160,7 @@ class userHome extends Component {
                                 Cancel Event
                               </Button>
                               <Button 
-                              onClick={()=>this.routeToDetails(event.id)}
+                              onClick={()=>this.routeToDetails(event)}
                               size="small" 
                               variant="contained"
                               color="primary">
@@ -175,4 +189,4 @@ class userHome extends Component {
         return reduxState;
     }
 
-    export default connect(mapReduxStateToProps)(userHome);
+    export default connect(mapReduxStateToProps)(withRouter(userHome));
