@@ -26,7 +26,7 @@ class restrictionFood extends Component {
     // }
     trueClick=()=>{
        
-        this.props.dispatch({type:'SET_NEW_RESTRICTION', payload: {id: this.props.currentRes.id, bool: true, question: this.props.currentRes.question_word}});
+        this.props.dispatch({type:'SET_NEW_RESTRICTION', payload: {id: this.props.currentRes.id, bool: false, question: this.props.currentRes.question_word}});
        
         
     }
@@ -47,7 +47,7 @@ class restrictionFood extends Component {
                        <Button
                         variant="outlined"
                         color="primary"
-                        onClick={()=>this.props.dispatch({type:'SET_NEW_RESTRICTION', payload: {id: this.props.currentRes.id, bool: false, question: this.props.currentRes.question_word}})}>
+                        onClick={()=>this.props.dispatch({type:'SET_NEW_RESTRICTION', payload: {id: this.props.currentRes.id, bool: true, question: this.props.currentRes.question_word}})}>
                            NO
                        </Button>
                        <Button

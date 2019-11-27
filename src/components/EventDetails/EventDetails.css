@@ -2,6 +2,10 @@
     width: 40%;
 }
 
+.basicDetail{
+    width: 50%;
+}
+
 .eventDetail-left{
     float: left;
 }
@@ -9,10 +13,21 @@
     float:right;
 }
 
+.display{
+    padding: 15px;
+    margin: 10px;
+}
+.flex-container{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
 .detailActionArea {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 30%;
+    height: 20vh;
   }

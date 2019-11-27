@@ -48,20 +48,24 @@ const router = express.Router();
 
 
 
-// router.get('/:eventId', (req,res)=>{
-//     //select all upcoming events the user is flagged as the host for
-//     // const queryText=`select * from "event" 
-//     // WHERE host_id=$1 AND end_time>=CURRENT_DATE`;
-//     // const queryValues=[req.user.id];
-//     // pool.query(queryText,queryValues
-//     //     ).then(results=>{
-//     //         res.send(results.rows);
-//     //     }).catch((error)=>{
-//     //         console.log('Error GET /event/hosting', error);
-//     //         res.sendStatus(500);
-//     //     })
+router.get('/:eventId', (req,res)=>{
+    //select all foods being brought to the event and its restrictions 
+    const queryText=`	select f.id, f.name, f.ingredients, f.user_id, array_agg(r.category) AS restriction from "food" f 
+        FULL JOIN  "food_restriction" fr ON f.id=fr.food_id 
+        FULL JOIN  "restriction" r ON fr.restriction_id=r.id
+        WHERE f.event_id=$1
+        GROUP BY f.id, f."name", f.ingredients, f.user_id`;
+    const queryValues=[req.params.eventId];
+    pool.query(queryText,queryValues
+        ).then(results=>{
+            res.send(results.rows);
+        }).catch((error)=>{
+            console.log('Error GET /food/:eventId', error);
+            res.sendStatus(500);
+        })
 
-// })
+})
+
 
 /**
  * POST route to add a new food, called on form submit

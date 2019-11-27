@@ -59,7 +59,7 @@ class userHome extends Component {
         console.log('in route to details', eventDetail);
         this.props.dispatch({type: 'FETCH_DETAIL_COUNT', payload:{id: eventDetail.id}});
         this.props.dispatch({type: 'FETCH_DETAIL_RESTRICTION', payload:{id: eventDetail.id}});
-    
+        this.props.dispatch({type: 'FETCH_EVENT_FOOD', payload:{id: eventDetail.id}});
         this.props.history.push('/eventDetails');
         
     }

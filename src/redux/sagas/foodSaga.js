@@ -92,8 +92,21 @@ import axios from 'axios';
         }
     }
 
+    function* fetchEventFood(action){
+        console.log('in fetchEventFood food saga');
+        try{
+            const foods=yield axios.get(`/food/${action.payload.id}`);
+            yield put ({type: 'SET_EVENT_FOOD', payload: foods.data})
+
+        } catch (error){
+            console.log('Error getting this events food:', error);
+        }
+    }
+
+
   function* eventSaga() {
    yield takeEvery ('FETCH_ADD_FOOD', fetchAddFood);
+   yield takeEvery ('FETCH_EVENT_FOOD', fetchEventFood);
     //yield takelatest('FETCH_USER_RESTRICTION', userRestrictionFetch);
   }
   
