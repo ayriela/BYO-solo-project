@@ -49,16 +49,16 @@ import axios from 'axios';
 //         }
 //     }
 
-//       //host cancels the whole event 
-//       function* fetchCancelEvent(action){
-//           console.log('in cancel event', action.payload.eventId);
-//         try {
-//             yield axios.delete(`/event/${action.payload.eventId}`);
-//             yield put({type: 'FETCH_HOSTING'});
-//         } catch (error) {
-//             console.log('Error canceling the event:', error);
-//         }
-//     }
+      //food creator deletes the food record they add
+      function* fetchDeleteFood(action){
+          console.log('in fetchDeleteFood', action.payload.id);
+        try {
+            yield axios.delete(`/food/${action.payload.id}`);
+            yield put({type: 'FETCH_EVENT_FOOD', payload: {id: action.payload.eventId}});
+        } catch (error) {
+            console.log('Error deleting the food:', error);
+        }
+    }
 
 //     //grab the list of all events the user is attending 
 //     function* fetchAttending(){
@@ -85,7 +85,8 @@ import axios from 'axios';
         console.log('in fetchAddFood food saga');
         try{
             yield axios.post('/food', action.payload);
-        //grab the list of all foods
+        //grab the list of all foods again
+            yield put({type: 'FETCH_EVENT_FOOD', payload: {id: action.payload.eventId}});
 
         } catch (error){
             console.log('Error posting food:', error);
@@ -107,6 +108,7 @@ import axios from 'axios';
   function* eventSaga() {
    yield takeEvery ('FETCH_ADD_FOOD', fetchAddFood);
    yield takeEvery ('FETCH_EVENT_FOOD', fetchEventFood);
+   yield takeEvery ('FETCH_DELETE_FOOD', fetchDeleteFood);
     //yield takelatest('FETCH_USER_RESTRICTION', userRestrictionFetch);
   }
   

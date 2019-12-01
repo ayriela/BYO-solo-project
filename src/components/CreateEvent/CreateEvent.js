@@ -39,7 +39,7 @@ class createEvent extends Component {
     }
     //send all changes to database
     submitEvent=()=>{
-        console.log('in submit', this.state);
+        //console.log('in submit', this.state);
         //const startDateTime= Date.parse(this.state.date+'T'+this.state.startTime);
         //const endDateTime= Date.parse(this.state.date+'T'+this.state.endTime);
         //  const {
@@ -66,7 +66,7 @@ class createEvent extends Component {
         
         this.props.dispatch({type:`FETCH_UPDATE_EVENT`, payload: allValues});
 
-        console.log(startDateTime, endDateTime);
+        //console.log(startDateTime, endDateTime);
         
         //console.log('in Submit', profile);
         //this.props.dispatch({type: 'FETCH_PROFILE_UPDATE', payload: profile});

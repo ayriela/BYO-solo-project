@@ -12,7 +12,7 @@ import axios from 'axios';
     //     console.log('Error getting users invites:', error);
     //     }
         try{
-            console.log(action.payload, action.payload.id)
+            //console.log(action.payload, action.payload.id)
             const count=yield axios.get(`/detail/attendee/count/${action.payload.id}`);
             yield put({type: 'SET_DETAIL_COUNT', payload: count.data})
         } catch (error){

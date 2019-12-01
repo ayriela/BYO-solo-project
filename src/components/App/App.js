@@ -44,27 +44,27 @@ class App extends Component {
               path="/about"
               component={AboutPage}
             />
-             <Route
+             <ProtectedRoute
               exact
               path="/editProfile"
               component={editProfile}
             />
-            <Route
+            <ProtectedRoute
               exact
               path="/createEvent"
               component={createEvent}
             />
-            <Route
+            <ProtectedRoute
               exact
               path="/userHome"
               component={userHome}
             />
-              <Route
+              <ProtectedRoute
               exact
               path="/eventDetails"
               component={eventDetails}
             />
-             <Route
+             <ProtectedRoute
               exact
               path="/addFood"
               component={addFood}
@@ -76,7 +76,7 @@ class App extends Component {
             <ProtectedRoute
               exact
               path="/home"
-              component={UserPage}
+              component={userHome}
             />
             {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}

@@ -18,14 +18,14 @@ class editProfile extends Component {
         } 
         //update redux state for checkboxes
     handleChange = (event) => {
-            console.log('in handle change', event.target.id);
+            //console.log('in handle change', event.target.id);
             this.props.dispatch({type: 'UPDATE_RESTRICTION', payload: {id: event.target.name}});
         }
         //update value for username or email
 
         //update user profile details
     updateInput=(event,property) =>{
-        console.log('in update input', property, event.target.value)
+        //console.log('in update input', property, event.target.value)
         this.setState({
             ...this.state,
             [property]: event.target.value,
@@ -40,7 +40,7 @@ class editProfile extends Component {
             email: this.state.email,
             restriction: this.props.restriction, 
         };
-        console.log('in Submit', profile);
+        //console.log('in Submit', profile);
         this.props.dispatch({type: 'FETCH_PROFILE_UPDATE', payload: profile});
     }
 

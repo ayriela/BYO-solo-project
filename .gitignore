@@ -62,4 +62,4 @@ typings/
 .env
 
 # ignore package-lock as it complicates merging
-package-lock.json
+package-lock.jsonsendgrid.env

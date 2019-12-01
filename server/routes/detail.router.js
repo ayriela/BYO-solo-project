@@ -46,7 +46,7 @@ router.get('/attendee/count/:id', (req,res)=>{
 })
 
 router.get('/attendee/restrictions/:id', (req,res)=>{
-    console.log(req.params.id);
+    //console.log(req.params.id);
     const queryText=`SELECT r."id",r."category", COUNT(r."id") as total_with_allergy 
     FROM "restriction" r
     JOIN "user_restriction" ur ON ur."restriction_id"=r."id"
