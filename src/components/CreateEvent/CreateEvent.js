@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, TextField } from '@material-ui/core';
 
+import { ReactMultiEmail, isEmail } from 'react-multi-email';
+
 import moment from 'moment';
 
 // import {
@@ -24,7 +26,8 @@ class createEvent extends Component {
         endTime:'',
         location: '',
         alerts:'',
-        invitedEmail:'',
+        //invitedEmail:'',
+        emails: [],
         user: this.props.user.id,
     }
   
@@ -40,20 +43,6 @@ class createEvent extends Component {
     //send all changes to database
     submitEvent=()=>{
         //console.log('in submit', this.state);
-        //const startDateTime= Date.parse(this.state.date+'T'+this.state.startTime);
-        //const endDateTime= Date.parse(this.state.date+'T'+this.state.endTime);
-        //  const {
-        //     title,
-        //     description,
-        //     date,
-        //     startTime,
-        //     endTime,
-        //     location,
-        //     alerts,
-        //     invitedEmail,
-        //     user,
-        //     startDateTime,
-        //     endDateTime,
 
         const startDateTime = moment(`${this.state.date} ${this.state.startTime}`, 'YYYY-MM-DD HH:mm:ss').format();
         const endDateTime = moment(`${this.state.date} ${this.state.endTime}`, 'YYYY-MM-DD HH:mm:ss').format();
@@ -73,6 +62,7 @@ class createEvent extends Component {
     }
 
         render() {
+            const { emails } = this.state.emails;
             return (
                 <>
                 <div className="eventForm">
@@ -147,12 +137,36 @@ class createEvent extends Component {
                     </label>
                     <label>
                             Emails to invite:
-                        <TextField 
+                        {/* <TextField 
                         variant="outlined"
                         type="email"
                         value={this.state.invitedEmail} 
-                        onChange={(event)=>this.updateInput(event,"invitedEmail")}></TextField>
-                    </label>
+                        onChange={(event)=>this.updateInput(event,"invitedEmail")}></TextField> */}
+                            <ReactMultiEmail
+                                placeholder="Add your guest's email to send invite."
+                                emails={emails}
+                                onChange={(_emails: string[]) => {
+                                    this.setState({ emails: _emails });
+                                }}
+                                validateEmail={email => {
+                                    return isEmail(email); // return boolean
+                                }}
+                                getLabel={(
+                                    email: string,
+                                    index: number,
+                                    removeEmail: (index: number) => void,
+                                ) => {
+                                    return (
+                                        <div data-tag key={index}>
+                                            {email}
+                                            <span data-tag-handle onClick={() => removeEmail(index)}>
+                                                ×
+                                            </span>
+                                        </div>
+                                    );
+                                }}
+                            />
+                        </label>
                     <Button
                     color="primary"
                     variant="contained"
