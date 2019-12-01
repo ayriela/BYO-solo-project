@@ -60,6 +60,7 @@ typings/
 
 # dotenv environment variables file
 .env
+sendgrid.env
 
 # ignore package-lock as it complicates merging
 package-lock.jsonsendgrid.env

@@ -1,9 +1,12 @@
 .nav-title {
-    font-size: 24px;
+    font-size: 45px;
     font-weight: 700;
     display: inline-block;
-    color: #f2f2f2;
+    color: #fbfffc;
     padding-left: 10px;
+    font-family:  Avenir;
+    padding-left: 3px;
+    position: fixed;
 }
 
 .nav {
@@ -35,3 +38,12 @@
 .nav-right {
   float: right;
 }
+
+.fa{
+  color: #fbfffc;
+}
+
+.fa-car{
+  color: #fbfffc;
+}
+

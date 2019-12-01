@@ -31,19 +31,19 @@ class userHome extends Component {
 
     //update the invite and add this to your events 
     accceptInvite=(id)=>{
-        console.log('event: ', id);
+        //console.log('event: ', id);
         this.props.dispatch({type:'FETCH_INVITE_ACCEPT', payload:{eventId: id}});
     }
 
     //update the invite and reject this event
     removeRSVP=(id)=>{
-        console.log('in remove rsvp', id);
+        //console.log('in remove rsvp', id);
         this.props.dispatch({type:'FETCH_INVITE_REJECT', payload:{eventId: id}});
     }
 
     //delete the event you're hosting from the database 
     cancelEvent=(id)=>{
-        console.log('in cancel event', id);
+        //console.log('in cancel event', id);
         this.props.dispatch({type:'FETCH_CANCEL_EVENT', payload:{eventId: id}});
     }
 
