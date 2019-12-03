@@ -9,6 +9,7 @@ function* fetchEventUpdate(action) {
         //console.log(info, 'this is from eventSaga')
     //send event to datbase
       yield axios.post('/event', info);
+      yield put({type: 'FETCH_HOSTING'})
       
     //will need to get events list for user and host info again
 

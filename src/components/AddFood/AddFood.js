@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 import BasicFood from './BasicFood';
 import RestrictionFood from './RestrictionFood';
 import ConfirmFood from './ConfirmFood';
+import './AddFood.css';
 
 
 const useStyles = makeStyles({
@@ -33,7 +34,7 @@ function AddFood(props) {
 
 
   const restrictions=props.allRestriction.map((res,i)=>{
-      return {index: i+1, component: <RestrictionFood currentRes={res} />}
+      return {index: i+1, component: <RestrictionFood currentRes={res} next={handleNext}/>}
   })
 
   const steps=[{

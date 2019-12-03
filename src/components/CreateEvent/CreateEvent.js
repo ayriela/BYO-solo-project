@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 
 
 import { connect } from 'react-redux';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Paper } from '@material-ui/core';
 
 import { ReactMultiEmail, isEmail } from 'react-multi-email';
 
 import moment from 'moment';
+import './CreateEvent.css';
 
 // import {
 //     MuiPickersUtilsProvider,
@@ -55,10 +56,9 @@ class createEvent extends Component {
         
         this.props.dispatch({type:`FETCH_UPDATE_EVENT`, payload: allValues});
 
-        //console.log(startDateTime, endDateTime);
         
-        //console.log('in Submit', profile);
-        //this.props.dispatch({type: 'FETCH_PROFILE_UPDATE', payload: profile});
+        //send user back to their Home
+        this.props.history.push('/home');
     }
 
         render() {
@@ -66,6 +66,9 @@ class createEvent extends Component {
             return (
                 <>
                 <div className="eventForm">
+                    <Paper style={{backgroundColor: '#c8e6c9', color:'#1a237e'}}>
+                    <div className="form">
+                    <h2>Set up your Event:</h2> 
                     <label>
                             Title:
                         <TextField 
@@ -82,6 +85,14 @@ class createEvent extends Component {
                         value={this.state.description} 
                         onChange={(event)=>this.updateInput(event,"description")}></TextField>
                     </label>
+                    <label>
+                            Location:
+                        <TextField 
+                        variant="outlined"
+                        value={this.state.location} 
+                        onChange={(event)=>this.updateInput(event,"location")}></TextField>
+                    </label>
+                    <br></br>
                     <label>
                             Date:
                             {/* <KeyboardDatePicker
@@ -119,13 +130,7 @@ class createEvent extends Component {
                         value={this.state.endTime} 
                         onChange={(event)=>this.updateInput(event,"endTime")}></TextField>
                     </label>
-                    <label>
-                            Location:
-                        <TextField 
-                        variant="outlined"
-                        value={this.state.location} 
-                        onChange={(event)=>this.updateInput(event,"location")}></TextField>
-                    </label>
+                    <br></br>
                     <label>
                             Alert to All Guests:
                         <TextField
@@ -135,8 +140,8 @@ class createEvent extends Component {
                         value={this.state.alerts} 
                         onChange={(event)=>this.updateInput(event,"alerts")}></TextField>
                     </label>
-                    <label>
-                            Emails to invite:
+                    {/* <label>
+                            Emails to invite: */}
                         {/* <TextField 
                         variant="outlined"
                         type="email"
@@ -166,12 +171,17 @@ class createEvent extends Component {
                                     );
                                 }}
                             />
-                        </label>
+                        {/* </label> */}
+                    <div className="createEventButton">
                     <Button
                     color="primary"
                     variant="contained"
                     onClick={this.submitEvent}
+                    style={{position: 'right'}}
                     >Create Event</Button>
+                    </div>
+                    </div>
+                    </Paper>
                </div>
             </>
             );

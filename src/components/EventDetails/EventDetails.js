@@ -51,23 +51,24 @@ class userHome extends Component {
                         <h2 className="attendeeHeader">Attendees</h2>  
                         <h2 className="attendeeHeader, attendeeRight">Total: {this.props.detailCount.count}</h2>
 
-                        <div className="scrollDetail" styles={"width:150px;height:150px;line-height:3em;overflow:auto;padding:5px;"}>
-                        <theader>
-                            <tr>
-                                <th>
+                        <div className="scrollDetail">
+                        <table className="resTable">
+                            <tr className="resTable">
+                                <th className="leftColumn">
                                     Restriction Name:
                                 </th>
-                                <th>
-                                    Attendees with this Restriction:
+                                <th className="rightColumn">
+                                    Guests with restriction:
                                 </th>
                             </tr>
-                        </theader>
+                        {/* loop through list of guest restrictions and counts */}
                         {this.props.detailRestriction.map(res=>{
-                           return <tr key={res.id}> 
-                               <td>{res.category}</td>
-                               <td>{res.total_with_allergy}</td>
+                           return <tr key={res.id} className="resTable"> 
+                               <td className="leftColumn">{res.category}</td>
+                               <td className="rightColumn">{res.total_with_allergy}</td>
                            </tr>
                         })}
+                        </table>
                         </div>
                     </Paper>
                     </div>
@@ -75,14 +76,13 @@ class userHome extends Component {
                     <div className="eventDetail-right">
                     <Paper className="display" style={{backgroundColor: '#c8e6c9'}}>
                         <h2>Foods at this Event:</h2>
-                        <div className="scrollDetail" styles="width:150px;height:150px;line-height:3em;overflow:auto;padding:5px;">
-                        {/* <theader>
-                            <tr>
-                                <th>
-                                    Foods at this Event: 
+                        <div className="scrollDetail">
+                        <table className="resTable">
+                            <tr className="resTable">
+                                <th className="leftColumn">
+                                    Food title and restriction(s) it's safe for: 
                                 </th>
                             </tr>
-                        </theader> */}
                         {this.props.eventFood.map(food=>{
                            return <tr key={food.id}> 
                                <td>{food.name}</td>
@@ -98,6 +98,7 @@ class userHome extends Component {
                                </td>
                            </tr>
                         })}
+                        </table>
                         </div>
                     </Paper>
                     </div>
