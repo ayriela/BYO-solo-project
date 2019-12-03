@@ -69,6 +69,7 @@ class createEvent extends Component {
                     <Paper style={{backgroundColor: '#c8e6c9', color:'#1a237e'}}>
                     <div className="form">
                     <h2>Set up your Event:</h2> 
+                    <div className="form-line1">
                     <label>
                             Title:
                         <TextField 
@@ -92,7 +93,8 @@ class createEvent extends Component {
                         value={this.state.location} 
                         onChange={(event)=>this.updateInput(event,"location")}></TextField>
                     </label>
-                    <br></br>
+                    </div>
+                    <div className="form-line2">
                     <label>
                             Date:
                             {/* <KeyboardDatePicker
@@ -130,7 +132,8 @@ class createEvent extends Component {
                         value={this.state.endTime} 
                         onChange={(event)=>this.updateInput(event,"endTime")}></TextField>
                     </label>
-                    <br></br>
+                    </div>
+                    <div className="form-line3">
                     <label>
                             Alert to All Guests:
                         <TextField
@@ -140,6 +143,7 @@ class createEvent extends Component {
                         value={this.state.alerts} 
                         onChange={(event)=>this.updateInput(event,"alerts")}></TextField>
                     </label>
+                    </div>
                     {/* <label>
                             Emails to invite: */}
                         {/* <TextField 
@@ -148,7 +152,7 @@ class createEvent extends Component {
                         value={this.state.invitedEmail} 
                         onChange={(event)=>this.updateInput(event,"invitedEmail")}></TextField> */}
                             <ReactMultiEmail
-                                placeholder="Add your guest's email to send invite."
+                                placeholder="Add your guest's email(s) to send invite."
                                 emails={emails}
                                 onChange={(_emails: string[]) => {
                                     this.setState({ emails: _emails });

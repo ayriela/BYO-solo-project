@@ -10,7 +10,8 @@ const AboutPage = () => (
   <div className="aboutPage">
     <Paper style={{backgroundColor: "#96b397"}}>
       <p>
-        Welcome to B.Y.O. This application is an event hosting app specifically designed to track information about the attendees dietary allergies and restrctions. You can set up your 
+        Welcome to B.Y.O. This application is an event hosting app designed to track the attendees allergies and dietary restrctions. 
+        Set up your profile and your restrictions will show up on any event to which you RSVP.
       </p>
     </Paper>
   </div>

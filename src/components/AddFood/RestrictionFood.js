@@ -54,7 +54,6 @@ class restrictionFood extends Component {
                            NOT SURE
                        </Button>
                    </CardActionArea>
-                   {JSON.stringify(this.props, null, 2)}
                    </div>
                </Card>
             );

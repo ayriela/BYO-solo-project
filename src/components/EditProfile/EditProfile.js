@@ -44,6 +44,7 @@ class editProfile extends Component {
         };
         //console.log('in Submit', profile);
         this.props.dispatch({type: 'FETCH_PROFILE_UPDATE', payload: profile});
+        this.props.history.push('/home');
     }
 
     render() {
@@ -70,13 +71,13 @@ class editProfile extends Component {
                         <div className="userInfo">
                             <label>
                                 Username:
-                    <input
+                                    <input
                                     value={this.state.username}
                                     onChange={(event) => this.updateInput(event, "username")}></input>
                             </label>
                             <label>
                                 Email:
-                    <input
+                                    <input
                                     value={this.state.email}
                                     onChange={(event) => this.updateInput(event, "email")}></input>
                             </label>
