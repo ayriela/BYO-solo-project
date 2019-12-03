@@ -66,7 +66,24 @@ router.delete('/:id', async (req,res)=>{
         const queryUserEventText=`DELETE FROM "user_event" where event_id=$1`
         const queryValues=[req.params.id];
         await client.query(queryUserEventText,queryValues);
-        //will also need to delete food records when foods are added
+        
+        
+        //get list of all foods for event
+        const queryEventFood=`SELECT * FROM "food" WHERE event_id=$1`
+        const eventFoods=await client.query(queryEventFood, queryValues);
+        const foodResult=eventFoods.rows;
+
+        //delete the food_restriction records for this event's foods
+        await Promise.all(foodResult.map(food => {
+            const queryFoodResText=`DELETE FROM "food_restriction" where food_id=$1`;
+            return client.query(queryFoodResText, [food.id]);
+        }));
+
+        //now delete the foods 
+        const queryFoodText=`DELETE FROM "food" where event_id=$1`;
+        await client.query(queryFoodText, queryValues);
+
+
         //now delete the event record 
         const queryEventText=`DELETE FROM "event" where id=$1`;
         await client.query(queryEventText,queryValues);
