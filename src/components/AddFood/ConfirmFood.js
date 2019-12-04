@@ -34,7 +34,7 @@ class confirmFood extends Component {
                    <Typography>Name of Dish: {this.props.newFood.name}</Typography>
                    <Typography>Ingredients: {this.props.newFood.ingredients}</Typography>
                    {this.props.newFood.restriction.map(res=>{
-                       return <Typography>Does this contain {res.question}? {res.bool==='not sure'?'Not Sure':(res.bool?'Yes':'No')}</Typography>
+                       return <Typography>Does this contain {res.question}? {res.bool==='not sure'?'Not Sure':(res.bool?'No':'Yes')}</Typography>
                    })}
                    <Button
                    variant="contained"

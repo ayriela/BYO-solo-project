@@ -1,38 +1,41 @@
-# Prime Project
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+# B.Y.O.
+![REPO SIZE](https://img.shields.io/github/repo-size/ayriela/BYO-solo-project.svg?style=flat-square)
+![TOP_LANGUAGE](https://img.shields.io/github/languages/top/ayriela/BYO-solo-project.svg?style=flat-square)
+![FORKS](https://img.shields.io/github/forks/ayriela/BYO-solo-project.svg?style=social)
 
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
 
-## Download (Don't Clone) This Repository
 
-* Don't Fork or Clone. Instead, click the `Clone or Download` button and select `Download Zip`.
-* Unzip the project and start with the code in that folder.
-* Create a new GitHub project and push this code to the new repository.
+## Description
+Duration: 2 Week Project
+
+B.Y.O. is a web application for event planning that is designed to easily track and communicate the allergies or dietary restrictions of the attendees to the host and other guests. This also gives guests who have restrictions an idea of whether foods that accommodate their needs will be present. Foods can be added to events by guests or event hosts, and they walk through a form to flag their foods as safe or unsafe for various restrictions. This means other guests won't be left wondering if the salad at an event will actually have bacon, making it unsuitable as a vegetarian option. Instead a vegetarian guest can quickly see if they need to bring their own dish to the event or plan to eat beforehand.
+
+### Deployed Link 
+Coming Soon!
+
+## Screen Shots
+### User's Home Page
+![Screen Shot](User_Home.png)
+
+### Event Details Page
+![Screen Shot](Event_Detail.png)
 
 ## Prerequisites
-
-Before you get started, make sure you have the following software installed on your computer:
 
 - [Node.js](https://nodejs.org/en/)
 - [PostrgeSQL](https://www.postgresql.org/)
 - [Nodemon](https://nodemon.io/)
 
-## Create database and table
 
-Create a new database called `prime_app` and create a `user` table:
-
-```SQL
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-```
-
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
 
 ## Development Setup Instructions
 
+### Create database and tables
+
+Create a new database called `BYO` and commands for creating the necessary tables can be found in the database.sql file.
+
+### Set up your local server
+* Clone this respository 
 * Run `npm install`
 * Create a `.env` file at the root of the project and paste this line into the file:
     ```
@@ -44,72 +47,51 @@ If you would like to name your database something else, you will need to change 
 * Run `npm run client`
 * Navigate to `localhost:3000`
 
-## Debugging
-
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run client`. Start the debugging server by selecting the Debug button.
-
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
-
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
-
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
-
-
-## Testing Routes with Postman
-
-To use Postman with this repo, you will need to set up requests in Postman to register a user and login a user at a minimum. 
-
-Keep in mind that once you using the login route, Postman will manage your session cookie for you just like a browser, ensuring it is sent with each subsequent request. If you delete the `localhost` cookie in Postman, it will effectively log you out.
-
-1. Start the server - `npm run server`
-2. [Import the sample routes JSON file](./PostmanPrimeSoloRoutes.json) by clicking `Import` in Postman. Select the file.
-3. Click `Collections` and `Send` the following three calls in order:
-    1. `POST /api/user/register` registers a new user, see body to change username/password
-    2. `POST /api/user/login` will login a user, see body to change username/password
-    3. `GET /api/user` will get user information, by default it's not very much
-
-After running the login route above, you can try any other route you've created that requires a logged in user!
+## Usage
+1. User creates their account with a username, email, and password
+2. The user can now navigate to Edit Profile to set up their dietary needs. They can come back to this at any point if they're diagnosed with a new allergy or decide to go vegetarian.
+3. The user's home page will display the list of upcoming events they've RSVP'd to, events they're hosting, or any events they've been invited to.
+    - From this screen the user can dig deeper into a particular event's details. 
+    - They can cancel their RSVP for an event they can no longer attend.
+    - Events they're hosting can be canceled, deleting the event for all other guests. 
+4. Going to the Event Detail page the user is presented with the current data about who is attending, what allergies or restrictions (and counts of the guests with these concerns), as well as the foods people are bringing and what restrictions for which they've been marked as safe.
+    - On this screen a user can also quickly add the event to a google or apple calendar so they've got a reminder about the event outside of this application.
+    - Additionally the user may open the add food form where they can title their dish, add a list of ingredients, and then they are prompted through a series of questions to help them categorize  their food as containing or free-from a particular ingredient. They're given some help text to bring awareness to ingredients they might not consider checking for. 
+        - If at any point the user needs to take another look at the attendee breakdown they can simply click out of the dialog to take another look, but they will start at the beginning of the form while their answers have still been saved. 
+        - On the confirmation page however the user can completely cancel a food that they don't wish to add or decide to confirm the information adding this food to the event foods list.
+        - Since this user added the particular food they'll be able to Delete the food item if they need to change or update it later, but foods other user's are bringing don't have the option to be deleted.
+5. After a user has taken a look through their Event's details they feel more comfortable about eating at this event because they know if there are safe options available to them. 
 
 
-## Production Build
+## Built With
 
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
+- javascript 
+- React
+- Redux
+- Sagas
+- Moment.js
+- react-add-to-calendar
+- react-multi-email
+- Material UI
+- Node using express, body-parser, and pg
+- PostgreSQL
 
-* Start postgres if not running already by using `brew services start postgresql`
-* Run `npm start`
-* Navigate to `localhost:5000`
 
-## Lay of the Land
+## Roadmap
+Due to the tight timeline to scope, architect, and implement the initial build of this application there were many features that I have not been able to incorporate yet. The next versions of this app will tackle some of the following:
 
-* `src/` contains the React application
-* `public/` contains static assets for the client-side
-* `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site
-* `server/` contains the Express App
+- An Update Event page so that hosts may go in and modify the current event settings and invite additional guests.
+- Allowing user-entered restrictions so that users may include more unusual allergies or dietary needs in their profile for example Pineapple or Avocado allergies which are uncommon. 
+- Integrate SendGrid for email capabilities to notify users of events they've been invited to.
+- Add a messaging system for attendees to privately message the event host about concerns they have. 
+- Allow a user to manage profiles for multiple guests for example a plus-one or children.
+- Have additional information collected about the user to personalize their profile. 
+- Have additional settings for hosts to restrict who is able to bring food or share event hosting responsibilities with another user. 
+- Use machine learning to guess which dietary restrictions most likely need to be managed for a given food. For example a user bringing cookies probably doesn't need to be asked if there is meat in their recipe.
+- Include a display of the ingredients data for the food to the event detail page.
+- Have loval public events that are able to advertise on the site that users can join without an invitation. 
 
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
 
-* src/components
-  * App/App
-  * Footer/Footer
-  * Nav/Nav
-  * AboutPage/AboutPage
-  * InfoPage/InfoPage
-  * UserPage/UserPage
-  * LoginPage/LoginPage
-  * RegisterPage/RegisterPage
-  * LogOutButton/LogOutButton
-  * ProtectedRoute/ProtectedRoute
 
-## Deployment
-
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
-
-## Update Documentation
-
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+## Acknowledgement
+Thanks to Prime Digital Academy, the entire Scytale cohort, as well as the developers of the react-add-to-calendar and react-multi-email components. 
