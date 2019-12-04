@@ -28,12 +28,13 @@ class confirmFood extends Component {
     }
         render() {
             return (
-                <Card>
+                <Card style={{backgroundColor: '#8aacc8'}}>
+                    <div className="foodForm">
                     <h2>Does this information look correct?</h2>
                    <Typography>Name of Dish: {this.props.newFood.name}</Typography>
                    <Typography>Ingredients: {this.props.newFood.ingredients}</Typography>
                    {this.props.newFood.restriction.map(res=>{
-                       return <Typography>Does this contain {res.question}? {res.bool==='not sure'?'Not Sure':(res.bool?'Yes':'No')}</Typography>
+                       return <Typography>Does this contain {res.question}? {res.bool==='not sure'?'Not Sure':(res.bool?'No':'Yes')}</Typography>
                    })}
                    <Button
                    variant="contained"
@@ -44,7 +45,7 @@ class confirmFood extends Component {
                    variant="outlined"
                    color="primary"
                    onClick={this.cancelDialog}>Cancel Create Food</Button>
-                   {JSON.stringify(this.props.dialog, null, 2)}
+                   </div>
                </Card>
             );
         }

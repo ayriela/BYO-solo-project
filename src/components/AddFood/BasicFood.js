@@ -13,16 +13,17 @@ class basicFood extends Component {
         render() {
             return (
                 <>
-                <Card>
+                <Card style={{backgroundColor: '#8aacc8'}}>
+                    <div className="foodForm">
                     <label>
                             Name your dish:
                         <TextField 
-                        required
                         variant="outlined"
                         type="text"
                         value={this.props.newFood.name} 
                         onChange={(event)=>this.props.dispatch({type: 'SET_NEW_FOOD_NAME', payload: {value: event.target.value}})}></TextField>
                     </label>
+                    <br></br>
                     <label>
                             Ingredients (optional):
                         <TextField
@@ -32,6 +33,7 @@ class basicFood extends Component {
                         value={this.props.newFood.ingredients} 
                         onChange={(event)=>this.props.dispatch({type: 'SET_NEW_FOOD_INGREDIENT', payload: {value: event.target.value}})}></TextField>
                     </label>
+                    </div>
                </Card>
             </>
             );

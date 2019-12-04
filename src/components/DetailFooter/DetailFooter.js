@@ -4,7 +4,7 @@ import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Button, Dialog} from '@material-ui/core';
 
-import moment from 'moment';
+//import moment from 'moment';
 
 import AddFood from '../AddFood/AddFood'
 
@@ -31,13 +31,13 @@ class detailFooter extends Component {
     } */
 
     routeToList=()=>{
-        console.log('in route to list');
+        //console.log('in route to list');
         this.props.history.push('/userHome');
     }
 
     //function to open dialog
     openDialog=()=>{
-        console.log('in open dialog');
+        //console.log('in open dialog');
         this.setState({
             dialog: true,
         });

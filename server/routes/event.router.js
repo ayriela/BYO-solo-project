@@ -27,9 +27,9 @@ router.get(`/invites`, async(req,res)=>{
  * PUT to flip invite to ATTENDING=true and add user_id
  **/
 router.put('/accept', (req,res)=>{
-    console.log('in event accept invite put');
-    const queryText=`UPDATE "user_event" SET "user_id"=$1, "attending"=TRUE WHERE "event_id"=$2`;
-    const queryValues=[req.user.id, req.body.eventId];
+    //console.log('in event accept invite put');
+    const queryText=`UPDATE "user_event" SET "user_id"=$1, "attending"=TRUE WHERE "event_id"=$2 AND "invited_email"=$3`;
+    const queryValues=[req.user.id, req.body.eventId, req.user.email];
     pool.query(queryText,queryValues
         ).then(
             res.sendStatus(200)
@@ -66,7 +66,24 @@ router.delete('/:id', async (req,res)=>{
         const queryUserEventText=`DELETE FROM "user_event" where event_id=$1`
         const queryValues=[req.params.id];
         await client.query(queryUserEventText,queryValues);
-        //will also need to delete food records when foods are added
+        
+        
+        //get list of all foods for event
+        const queryEventFood=`SELECT * FROM "food" WHERE event_id=$1`
+        const eventFoods=await client.query(queryEventFood, queryValues);
+        const foodResult=eventFoods.rows;
+
+        //delete the food_restriction records for this event's foods
+        await Promise.all(foodResult.map(food => {
+            const queryFoodResText=`DELETE FROM "food_restriction" where food_id=$1`;
+            return client.query(queryFoodResText, [food.id]);
+        }));
+
+        //now delete the foods 
+        const queryFoodText=`DELETE FROM "food" where event_id=$1`;
+        await client.query(queryFoodText, queryValues);
+
+
         //now delete the event record 
         const queryEventText=`DELETE FROM "event" where id=$1`;
         await client.query(queryEventText,queryValues);
@@ -131,7 +148,8 @@ router.post('/', async (req, res) => {
             endTime,
             location,
             alerts,
-            invitedEmail,
+            //invitedEmail,
+            emails,
             user,
             startDateTime,
             endDateTime,
@@ -146,15 +164,18 @@ router.post('/', async (req, res) => {
         const eventAdded=await client.query(addQuery,addValues);
         const eventId = eventAdded.rows[0].id;
 
-        //add event host to the user_event table and flag as attending-->NEEDS EMAIL because NOT NULL CONSTRAINT NOT NECESSARY ANYMORE
-        // const hostEventAdd=`INSERT INTO "user_event" ( "user_id", "event_id", "attending") VALUES ($1, $2, TRUE)`;
-        // const hostEventValues=[req.user.id, eventId];
-        // await client.query(hostEventAdd,hostEventValues);
 
-        //add invitation to the user_event table
-        const userEventAdd=`INSERT INTO "user_event" ( "invited_email", "event_id" ) VALUES ($1, $2)`;
-        const addUserEventValues=[invitedEmail,eventId];
-        await client.query(userEventAdd,addUserEventValues);
+        //add invitation to the user_event table for single email
+        // const userEventAdd=`INSERT INTO "user_event" ( "invited_email", "event_id" ) VALUES ($1, $2)`;
+        // const addUserEventValues=[invitedEmail,eventId];
+        // await client.query(userEventAdd,addUserEventValues);
+
+        //add invitations to user_event for multiple emails
+        await Promise.all(emails.map(email => {
+            const userEventAdd=`INSERT INTO "user_event" ( "invited_email", "event_id" ) VALUES ($1, $2)`;
+            const addUserEventValues=[email, eventId];
+            return client.query(userEventAdd,addUserEventValues);
+        }));
 
         await client.query('COMMIT')
         res.sendStatus(201);

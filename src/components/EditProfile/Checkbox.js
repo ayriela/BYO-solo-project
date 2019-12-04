@@ -36,21 +36,21 @@
 export default connect()(profileCheckbox);
  */
 
-import React from 'react';
-//import PropTypes from 'prop-types';
+// import React from 'react';
+// //import PropTypes from 'prop-types';
 
-const Checkbox = ({ type = 'checkbox', category, checked=false, onChange }) => (
-  <input type={type} category={category} checked={checked} onChange={onChange} />
-);
+// const Checkbox = ({ type = 'checkbox', category, checked=false, onChange }) => (
+//   <input type={type} category={category} checked={checked} onChange={onChange} />
+// );
 
-//{JSON.stringify(props,null,2)}
+// //{JSON.stringify(props,null,2)}
 
-/* Checkbox.propTypes = {
-  type: PropTypes.string,
-  category: PropTypes.string.isRequired,
-  checked: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
-}
- */
+// /* Checkbox.propTypes = {
+//   type: PropTypes.string,
+//   category: PropTypes.string.isRequired,
+//   checked: PropTypes.bool,
+//   onChange: PropTypes.func.isRequired,
+// }
+//  */
 
-export default Checkbox;
+// export default Checkbox;

@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 
 
 import { connect } from 'react-redux';
-import { Button, TextField, Paper, Typography, Card, CardContent, CardActionArea, CardActions , Dialog} from '@material-ui/core';
+import { Button, TextField, Paper, Typography, Box, CardContent, CardActionArea, CardActions , Dialog} from '@material-ui/core';
 
 import moment from 'moment';
 
 import DetailFooter from '../DetailFooter/DetailFooter';
-import AddFood from '../AddFood/AddFood';
+//import AddFood from '../AddFood/AddFood';
 
 import './EventDetails.css'
+
 
 class userHome extends Component {
     componentDidMount(){
@@ -19,99 +20,93 @@ class userHome extends Component {
         //this.props.dispatch({type: 'FETCH_ALL_RESTRICTIONS'});
     }
 
-   
-    //send all changes to database
-    createEvent=()=>{
-     console.log('in create event');
+    deleteFood=(id)=>{
+        //console.log('in delete food');
+        //add call to delete the food
+        const data={
+            id: id,
+            eventId: this.props.selectedEvent.id,
+        };
+        this.props.dispatch({type: 'FETCH_DELETE_FOOD', payload: data});
+
     }
-
-    accceptInvite=(id)=>{
-        console.log('event: ', id);
-        //this.props.dispatch({type:'FETCH_INVITE_ACCEPT', payload:{eventId: id}});
-        
-    }
-
-    // removeRSVP=(id)=>{
-    //     console.log('in remove rsvp', id);
-    // }
-
-    // cancelEvent=(id)=>{
-    //     console.log('in cancel event', id);
-    // }
-
-    // routeToDetails=(id)=>{
-    //     console.log('in route to details', id);
-    // }
-
-    //function to open dialog
-    //  openDialog=()=>{
-    //     this.setState({
-    //         dialog: true,
-    //     });
-    // }
-    // //function to close dialog, reset redux, and route to home
-    // closeDialog=()=>{
-    //     this.setState({
-    //         dialog: false,
-    //     });
-    //     //reset the redux state
-    //     //this.props.dispatch({type: 'RESET'});
-    //     //this.props.history.push(this.props.direction.f);
-
-    // }
 
         render() {
             return (
                 <>
                 <div className="eventDetails">
-                    <h1>{this.props.selectedEvent.title}</h1>
-                    <h5>Description: {this.props.selectedEvent.description}</h5>
-                    <h5>Location: {this.props.selectedEvent.location}</h5>
-                    <h5>Date: {moment(this.props.selectedEvent.start_time).format('MM/DD/YYYY')}</h5>
-                    <h5>Time: {moment(this.props.selectedEvent.start_time).format('h:mm a')}-{moment(this.props.selectedEvent.end_time).format('h:mm a')}</h5>
-
                     <div className="alerts">
-                        <Typography>Alerts! {this.props.selectedEvent.host_messages}</Typography>
+                        <Typography style={{color: '#97b498', textAlign: "center"}} variant="h6">Alerts! {this.props.selectedEvent.host_messages}</Typography>
                     </div>
+                    <div className="basicDetail">
+                    <h1>{this.props.selectedEvent.title}</h1>
+                    <Typography>Description: {this.props.selectedEvent.description}</Typography>
+                    <Typography>Location: {this.props.selectedEvent.location}</Typography>
+                    <Typography>Date: {moment(this.props.selectedEvent.start_time).format('MM/DD/YYYY')}</Typography>
+                    <Typography>Time: {moment(this.props.selectedEvent.start_time).format('h:mm a')}-{moment(this.props.selectedEvent.end_time).format('h:mm a')}</Typography>
+                    </div>
+                    <div className="flex-container">
                     <div className="eventDetail-left">
-                    <Paper>
-                        <h2>Attendees</h2>  
-                        <h3>Total: {this.props.detailCount.count}</h3>
+                    <Paper className="display" style={{backgroundColor: '#c8e6c9'}}>
+                        <h2 className="attendeeHeader">Attendees</h2>  
+                        <h2 className="attendeeHeader, attendeeRight">Total: {this.props.detailCount.count}</h2>
 
-                        <div styles="width:150px;height:150px;line-height:3em;overflow:auto;padding:5px;">
-                        <theader>
-                            <tr>
-                                <th>
+                        <div className="scrollDetail">
+                        <table className="resTable">
+                            <tr className="resTable">
+                                <th className="leftColumn">
                                     Restriction Name:
                                 </th>
-                                <th>
-                                    Attendees with this Restriction:
+                                <th className="rightColumn">
+                                    Guests with restriction:
                                 </th>
                             </tr>
-                        </theader>
+                        {/* loop through list of guest restrictions and counts */}
                         {this.props.detailRestriction.map(res=>{
-                           return <tr key={res.id}> 
-                               <td>{res.category}</td>
-                               <td>{res.total_with_allergy}</td>
+                           return <tr key={res.id} className="resTable"> 
+                               <td className="leftColumn">{res.category}</td>
+                               <td className="rightColumn">{res.total_with_allergy}</td>
                            </tr>
                         })}
-                    </div>
-                    </Paper>
-
-                    <div className="eventDetail-right"></div>
-                    <Paper>
-                        <h2>Foods will go Here...Eventually</h2>
-                        <div styles="width:150px;height:150px;line-height:3em;overflow:auto;padding:5px;">
-                 
+                        </table>
                         </div>
                     </Paper>
-                    
                     </div>
+
+                    <div className="eventDetail-right">
+                    <Paper className="display" style={{backgroundColor: '#c8e6c9'}}>
+                        <h2>Foods at this Event:</h2>
+                        <div className="scrollDetail">
+                        <table className="resTable">
+                            <tr className="resTable">
+                                <th className="leftColumn">
+                                    Food title and restriction(s) it's safe for: 
+                                </th>
+                            </tr>
+                        {this.props.eventFood.map(food=>{
+                           return <tr key={food.id}> 
+                               <td>{food.name}</td>
+                                    <ul>
+                                        {food.restriction.map(res=>{ 
+                                            if(res!==null){
+                                                return <li>{res}</li>
+                                            } 
+                                        })} 
+                                    </ul>
+                               <td>
+                               {food.user_id==this.props.user.id?<Button variant="outlined" color="primary" onClick={()=>this.deleteFood(food.id)}>Delete</Button>:''}
+                               </td>
+                           </tr>
+                        })}
+                        </table>
+                        </div>
+                    </Paper>
+                    </div>
+                    </div>
+                </div>
                     <div className="detailActionArea">
                         <DetailFooter close={this.closeDialog}/>
                     </div>
-               
-               </div>
             </>
             );
         }

@@ -11,29 +11,26 @@ import { actionChannel } from '@redux-saga/core/effects';
 
 
 class restrictionFood extends Component {
-  
-   
-    // setFalse=()=>{
-    //     this.setState({
-    //             boolean: false,
-    //     });
-    // }
+    //handles YES button and sets the restriction to false
+    falseClick=()=>{
+        this.props.dispatch({type:'SET_NEW_RESTRICTION', payload: {id: this.props.currentRes.id, bool: false, question: this.props.currentRes.question_word}});
+        this.props.next();
+    }
 
-    // setTrue=()=>{
-    //     this.setState({
-    //         boolean: true,
-    //     });
-    // }
     trueClick=()=>{
-       
         this.props.dispatch({type:'SET_NEW_RESTRICTION', payload: {id: this.props.currentRes.id, bool: true, question: this.props.currentRes.question_word}});
-       
-        
+        this.props.next();
+    }
+
+    notSureClick=()=>{
+        this.props.dispatch({type:'SET_NEW_RESTRICTION', payload: {id: this.props.currentRes.id, bool: 'not sure', question: this.props.currentRes.question_word}});
+        this.props.next();
     }
 
         render() {
             return (
-                <Card>
+                <Card style={{backgroundColor: '#8aacc8'}}>
+                    <div className="foodForm">
                     <h2>Does this food contain {this.props.currentRes.question_word}?</h2>
                    <Typography>{this.props.currentRes.details}</Typography>
                    <CardActionArea>
@@ -41,22 +38,23 @@ class restrictionFood extends Component {
                        variant="outlined"
                        color="primary"
                        //disabled={this.props.newFood.restriction.includes({id: this.props.currentRes.id, bool: true})}
-                       onClick={this.trueClick}>
+                       onClick={this.falseClick}>
                            YES
                        </Button>
                        <Button
                         variant="outlined"
                         color="primary"
-                        onClick={()=>this.props.dispatch({type:'SET_NEW_RESTRICTION', payload: {id: this.props.currentRes.id, bool: false, question: this.props.currentRes.question_word}})}>
+                        onClick={this.trueClick}>
                            NO
                        </Button>
                        <Button
                         variant="outlined"
                         color="primary"
-                        onClick={()=>this.props.dispatch({type:'SET_NEW_RESTRICTION', payload: {id: this.props.currentRes.id, bool: 'not sure', question: this.props.currentRes.question_word}})}>
+                        onClick={this.notSureClick}>
                            NOT SURE
                        </Button>
                    </CardActionArea>
+                   </div>
                </Card>
             );
         }

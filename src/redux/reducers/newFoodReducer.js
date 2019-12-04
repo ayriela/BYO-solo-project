@@ -19,15 +19,14 @@ const newFoodReducer = (state = starting, action) => {
             ingredients: action.payload.value,
         }
     } else if (action.type==='SET_NEW_RESTRICTION'){
-        console.log('in set_new_restriction', action.payload.id);
+        //console.log('in set_new_restriction', action.payload.id);
         //first check if the values exists
 
         ///figure out filter formatting
         if (state.restriction.filter(item=>item.id===action.payload.id).length!==0){
-            console.log('just after filter');
             return {...state,
                     restriction: state.restriction.map( i => {
-                        if (i.id==action.payload.id){
+                        if (i.id===action.payload.id){
                     //if it matches flip the active flag
                         return {...i, bool: action.payload.bool};
                     } else{

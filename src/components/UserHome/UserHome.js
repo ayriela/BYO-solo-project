@@ -23,43 +23,38 @@ class userHome extends Component {
         this.props.dispatch({type: 'FETCH_ALL_RESTRICTION'});
     }
 
-        //update user event details
-    // updateInput=(event,property) =>{
-    //     //console.log('in update input', property, event.target.value)
-    //     this.setState({
-    //         ...this.state,
-    //         [property]: event.target.value,
-    //     });
-    // }
-
-    //send all changes to database
+    //rout to the create event page
     createEvent=()=>{
-     console.log('in create event');
+     //console.log('in create event');
+     this.props.history.push('/createEvent');
     }
 
+    //update the invite and add this to your events 
     accceptInvite=(id)=>{
-        console.log('event: ', id);
+        //console.log('event: ', id);
         this.props.dispatch({type:'FETCH_INVITE_ACCEPT', payload:{eventId: id}});
-        
     }
 
+    //update the invite and reject this event
     removeRSVP=(id)=>{
-        console.log('in remove rsvp', id);
+        //console.log('in remove rsvp', id);
         this.props.dispatch({type:'FETCH_INVITE_REJECT', payload:{eventId: id}});
     }
 
+    //delete the event you're hosting from the database 
     cancelEvent=(id)=>{
-        console.log('in cancel event', id);
+        //console.log('in cancel event', id);
         this.props.dispatch({type:'FETCH_CANCEL_EVENT', payload:{eventId: id}});
     }
 
     routeToDetails=(eventDetail)=>{
-        
+        //pick the selected event and gather the info for this page
         this.props.dispatch({type: 'SET_SELECTED_EVENT', payload: eventDetail});
-        console.log('in route to details', eventDetail);
+        //console.log('in route to details', eventDetail);
         this.props.dispatch({type: 'FETCH_DETAIL_COUNT', payload:{id: eventDetail.id}});
         this.props.dispatch({type: 'FETCH_DETAIL_RESTRICTION', payload:{id: eventDetail.id}});
-    
+        this.props.dispatch({type: 'FETCH_EVENT_FOOD', payload:{id: eventDetail.id}});
+        //send the user to the eventDetails route
         this.props.history.push('/eventDetails');
         
     }
@@ -68,29 +63,37 @@ class userHome extends Component {
             return (
                 <>
                 <div className="userHome">
-                    <div className="alerts">
-                        <Typography>You have the following pending event invites:</Typography>
-                        <ul>
-                        {this.props.eventInvites.map(event=>{
-                           return <li key={event.id}>
-                                    {event.title} which is starting {moment(event.start_time).format('MMM Do YY h:mm a')}
-                                    <Button size="small"
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={()=>this.accceptInvite(event.id)}
-                                    >Accept Invite</Button>
-                            </li>
-                        })}
-                        </ul>
-                    </div>
+                    
+                      {/* if there is an event active show the list of pending invites */}
+                      {this.props.eventInvites[0]?
+                      <div className="alerts">
+                      <Typography>You have the following pending event invites:</Typography>
+                      <ul>
+                      {this.props.eventInvites.map(event=>{
+                         return <li key={event.id}>
+                                  {event.title} which is starting {moment(event.start_time).format('MMM Do YY h:mm a')}
+                                  <Button size="small"
+                                  variant="contained"
+                                  color="primary"
+                                  onClick={()=>this.accceptInvite(event.id)}
+                                  >Accept Invite</Button>
+                          </li>
+                      })} 
+                      </ul> </div>: <p></p>
+                      }
+                      
+                        
+                    
+                    <div className="flex-container">
                     <div className="userHome-left">
-                    <Paper><h2>Events you're Attending</h2></Paper>
-                    <div styles="width:150px;height:150px;line-height:3em;overflow:auto;padding:5px;">
+                    <Paper className="event-paper" style={{backgroundColor: '#c8e6c9'}}>
+                      <h2>Events you're Attending</h2>
+                      <div className="scroll">
                         {this.props.eventAttending.map(event=>{
-                            return <Card className="eventCard">
+                            return <Card className="eventCard" style={{backgroundColor: '#eeffff'}}>
                             <CardActionArea>
                               <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2">
+                                <Typography gutterBottom variant="h5" component="h1" style={{color:'#1a237e'}}>
                                   {event.title}
                                 </Typography>
                                 <div className="dateDisplay">
@@ -126,15 +129,18 @@ class userHome extends Component {
                           </Card>
                         })}
                     </div>
+                    </Paper>
+                    
                     </div>
                     <div className="userHome-right">
-                    <Paper><h2>Events you're Hosting</h2></Paper>
-                    <div styles="width:150px;height:150px;line-height:3em;overflow:auto;padding:5px;">
+                    <Paper className="event-paper" style={{backgroundColor: '#c8e6c9'}}>
+                      <h2>Events you're Hosting</h2>
+                      <div className="scroll">
                     {this.props.eventHosting.map(event=>{
-                            return <Card className="eventCard">
+                            return <Card className="eventCard" style={{backgroundColor: '#eeffff'}}>
                             <CardActionArea>
                               <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2">
+                                <Typography gutterBottom variant="h5" component="h1" style={{color:'#1a237e'}}>
                                   {event.title}
                                 </Typography>
                                 <div className="dateDisplay">
@@ -176,7 +182,10 @@ class userHome extends Component {
                     onClick={this.createEvent}
                     >Create Event</Button>
                     </div>
+                    </Paper>
+                   
                     </div>
+                  </div>
                </div>
             </>
             );

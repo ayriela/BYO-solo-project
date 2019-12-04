@@ -1,0 +1,21 @@
+.eventForm{
+    width: 70vw;
+    margin: auto;
+}
+
+.form{
+    padding: 15px;
+}
+.form label{ 
+    margin-left:5px;
+    margin-right: 5px;
+}
+
+.form-line1, .form-line2, .form-line3{
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.createEventButton{
+    text-align: right;
+}
