@@ -1,17 +1,11 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
-
-/**
- * PUT to flip invite to ATTENDING=true and add user_id
- **/
-router.put('/', (req,res)=>{
-
-})
 
 //get list of users attending the event  
-router.get('/attendees/:id', (req,res)=>{
+router.get('/attendees/:id', rejectUnauthenticated, (req,res)=>{
    const queryText=`SELECT u.id  FROM "user_event" ue JOIN "user" u ON u."id"=ue."user_id" 
    WHERE event_id=$1 AND ue.attending=true 
    UNION ALL
@@ -28,7 +22,8 @@ router.get('/attendees/:id', (req,res)=>{
 
 })
 
-router.get('/attendee/count/:id', (req,res)=>{
+//get the  count of the attendees and host
+router.get('/attendee/count/:id', rejectUnauthenticated, (req,res)=>{
     const queryText=`SELECT COUNT(u.id) from "user" u WHERE u.id IN 
     ( SELECT u.id  FROM "user_event" ue JOIN "user" u ON u."id"=ue."user_id" 
     WHERE event_id=$1 AND ue.attending=true 
@@ -45,7 +40,8 @@ router.get('/attendee/count/:id', (req,res)=>{
         })
 })
 
-router.get('/attendee/restrictions/:id', (req,res)=>{
+//get the full list of restrictions for the attendees and host
+router.get('/attendee/restrictions/:id', rejectUnauthenticated, (req,res)=>{
     //console.log(req.params.id);
     const queryText=`SELECT r."id",r."category", COUNT(r."id") as total_with_allergy 
     FROM "restriction" r
@@ -67,14 +63,5 @@ router.get('/attendee/restrictions/:id', (req,res)=>{
 
 })
 
-
-
-/**
- * POST route template
- */
-router.post('/', async (req, res) => {
-    //console.log('in event post');
-
-});
 
 module.exports = router;

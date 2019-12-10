@@ -1,12 +1,13 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
-
-router.delete('/:id', async (req,res)=>{
+//delete the food that was added to the event
+router.delete('/:id', rejectUnauthenticated, async (req,res)=>{
     //console.log('in food delete');
     const client = await pool.connect();
-    //should first check the user is the owner of the food event 
+    //should first check the user is the owner of the food  
 
     try{ 
         await client.query('BEGIN');
@@ -31,8 +32,8 @@ router.delete('/:id', async (req,res)=>{
 })
 
 
-
-router.get('/:eventId', (req,res)=>{
+//get the list of foods for the event and its restrictions that is is marked as safe for
+router.get('/:eventId', rejectUnauthenticated, (req,res)=>{
     //select all foods being brought to the event and its restrictions 
     const queryText=`	select f.id, f.name, f.ingredients, f.user_id, array_agg(r.category) AS restriction from "food" f 
         FULL JOIN  "food_restriction" fr ON f.id=fr.food_id 
@@ -54,7 +55,7 @@ router.get('/:eventId', (req,res)=>{
 /**
  * POST route to add a new food, called on form submit
  */
-router.post('/', async (req, res) => {
+router.post('/', rejectUnauthenticated, async (req, res) => {
     //console.log('in food post');
     const client = await pool.connect();
     try {
