@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-
-
 import { connect } from 'react-redux';
-import { Button, TextField, Card, CardActionArea, Typography} from '@material-ui/core';
-import { actionChannel } from '@redux-saga/core/effects';
+import { Button, Card, Typography} from '@material-ui/core';
 
 class confirmFood extends Component {
     cancelDialog=()=>{
