@@ -1,12 +1,13 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
 
 /** 
  * GET USER'S INVITED EVENTS
 **/
-router.get(`/invites`, async(req,res)=>{
+router.get(`/invites`, rejectUnauthenticated, async(req,res)=>{
     //console.log('in event invite get');
     const queryText=`SELECT e.id, e.title, e.start_time, e.host_id FROM "event" e 
     JOIN user_event ue ON ue.event_id=e.id
@@ -26,7 +27,7 @@ router.get(`/invites`, async(req,res)=>{
 /**
  * PUT to flip invite to ATTENDING=true and add user_id
  **/
-router.put('/accept', (req,res)=>{
+router.put('/accept', rejectUnauthenticated, (req,res)=>{
     //console.log('in event accept invite put');
     const queryText=`UPDATE "user_event" SET "user_id"=$1, "attending"=TRUE WHERE "event_id"=$2 AND "invited_email"=$3`;
     const queryValues=[req.user.id, req.body.eventId, req.user.email];
@@ -42,7 +43,7 @@ router.put('/accept', (req,res)=>{
 /**
  * PUT to flip invite to ATTENDING=false 
  **/
-router.put('/reject', (req,res)=>{
+router.put('/reject', rejectUnauthenticated, (req,res)=>{
     //console.log('in event reject invite put');
     const queryText=`UPDATE "user_event" SET "attending"=FALSE WHERE "event_id"=$2 AND user_id=$1`;
     const queryValues=[req.user.id, req.body.eventId];
@@ -55,7 +56,8 @@ router.put('/reject', (req,res)=>{
         })
 })
 
-router.delete('/:id', async (req,res)=>{
+//DELETE THE EVENT IF THIS USER IS THE HOST
+router.delete('/:id', rejectUnauthenticated, async (req,res)=>{
     console.log('in event delete');
     const client = await pool.connect();
     //should first check the user is the host of this event 
@@ -100,7 +102,7 @@ router.delete('/:id', async (req,res)=>{
 })
 
 //get list of events the user is attending 
-router.get('/attending', (req,res)=>{
+router.get('/attending', rejectUnauthenticated, (req,res)=>{
     //get for the current user and only events where attedning is true 
     //also make sure it's only the list of upcoming events but show any for the current day incase of long events 
     const queryText=`select e.* from "event" e 
@@ -118,7 +120,7 @@ router.get('/attending', (req,res)=>{
 
 })
 
-router.get('/hosting', (req,res)=>{
+router.get('/hosting', rejectUnauthenticated, (req,res)=>{
     //select all upcoming events the user is flagged as the host for
     const queryText=`select * from "event" 
     WHERE host_id=$1 AND end_time>=CURRENT_DATE`;
@@ -136,7 +138,7 @@ router.get('/hosting', (req,res)=>{
 /**
  * POST route to create a new event 
  */
-router.post('/', async (req, res) => {
+router.post('/', rejectUnauthenticated, async (req, res) => {
     //console.log('in event post');
     const client = await pool.connect();
     try {

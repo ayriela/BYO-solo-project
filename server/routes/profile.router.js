@@ -1,20 +1,12 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
-
-/**
- * GET route template
- */
-router.get('/', (req, res) => {
-
-
-});
-
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
 /*
 *PUT TO UPDATE THE USER'S PROFILE
 */
-router.put('/:id', async (req, res) => {
+router.put('/:id', rejectUnauthenticated, async (req, res) => {
     const client = await pool.connect();
     try {
         //console.log('in profile router /:id', req.body, req.params.id);
@@ -44,11 +36,5 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-/**
- * POST route template
- */
-router.post('/', (req, res) => {
-
-});
 
 module.exports = router;
