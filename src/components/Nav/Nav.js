@@ -7,7 +7,7 @@ import './Nav.css';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import Drawer from '@material-ui/core/Drawer';
-import {List, ListItem, ListItemText, Divider} from '@material-ui/core';
+import {List, ListItem, Divider} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 

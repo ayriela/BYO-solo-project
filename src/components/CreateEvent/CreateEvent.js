@@ -9,14 +9,6 @@ import { ReactMultiEmail, isEmail } from 'react-multi-email';
 import moment from 'moment';
 import './CreateEvent.css';
 
-// import {
-//     MuiPickersUtilsProvider,
-//     KeyboardTimePicker,
-//     KeyboardDatePicker,
-//   } from '@material-ui/pickers';
-
-
-
 
 class createEvent extends Component {
     state={
@@ -33,7 +25,7 @@ class createEvent extends Component {
     }
   
 
-        //update user event details
+    //update user event details
     updateInput=(event,property) =>{
         //console.log('in update input', property, event.target.value)
         this.setState({
@@ -41,22 +33,18 @@ class createEvent extends Component {
             [property]: event.target.value,
         });
     }
+
     //send all changes to database
     submitEvent=()=>{
         //console.log('in submit', this.state);
-
         const startDateTime = moment(`${this.state.date} ${this.state.startTime}`, 'YYYY-MM-DD HH:mm:ss').format();
         const endDateTime = moment(`${this.state.date} ${this.state.endTime}`, 'YYYY-MM-DD HH:mm:ss').format();
-
         const allValues={
             ...this.state,
             startDateTime: startDateTime,
             endDateTime: endDateTime,
         }
-        
         this.props.dispatch({type:`FETCH_UPDATE_EVENT`, payload: allValues});
-
-        
         //send user back to their Home
         this.props.history.push('/home');
     }
@@ -97,19 +85,6 @@ class createEvent extends Component {
                     <div className="form-line2">
                     <label>
                             Date:
-                            {/* <KeyboardDatePicker
-                                disableToolbar
-                                variant="inline"
-                                format="MM/dd/yyyy"
-                                margin="normal"
-                                id="date-picker-inline"
-                                label="Date picker"
-                                value={this.state.date}
-                                onChange={(event)=>this.updateInput(event,"date")}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }}
-                            /> */}
                         <TextField
                         type="date"
                         variant="outlined"

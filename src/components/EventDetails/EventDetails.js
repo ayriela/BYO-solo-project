@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-
-
 import { connect } from 'react-redux';
-import { Button, TextField, Paper, Typography, Box, CardContent, CardActionArea, CardActions , Dialog} from '@material-ui/core';
+import { Button, Paper, Typography} from '@material-ui/core';
 
 import moment from 'moment';
 
@@ -90,11 +88,13 @@ class userHome extends Component {
                                         {food.restriction.map(res=>{ 
                                             if(res!==null){
                                                 return <li>{res}</li>
-                                            } 
+                                            } else {
+                                                return null
+                                            }
                                         })} 
                                     </ul>
                                <td>
-                               {food.user_id==this.props.user.id?<Button variant="outlined" color="primary" onClick={()=>this.deleteFood(food.id)}>Delete</Button>:''}
+                               {food.user_id===this.props.user.id?<Button variant="outlined" color="primary" onClick={()=>this.deleteFood(food.id)}>Delete</Button>:''}
                                </td>
                            </tr>
                         })}

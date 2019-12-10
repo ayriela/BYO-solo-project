@@ -14,7 +14,6 @@ import Nav from '../Nav/Nav';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
 import editProfile from '../EditProfile/EditProfile';
 import createEvent from '../CreateEvent/CreateEvent';

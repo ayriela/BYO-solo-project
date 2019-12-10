@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import {withRouter} from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { Button, TextField, Paper, Typography, Card, CardContent, CardActionArea, CardActions } from '@material-ui/core';
-
-import eventDetails from '../EventDetails/EventDetails';
+import { Button, Paper, Typography, Card, CardContent, CardActionArea, CardActions } from '@material-ui/core';
 
 import moment from 'moment';
 
