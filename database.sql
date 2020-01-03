@@ -55,7 +55,8 @@ INSERT INTO "restriction" ("category", "details", "question_word") VALUES
 CREATE TABLE "user_restriction" (
     "id" SERIAL PRIMARY KEY,
     "user_id" int REFERENCES "user" NOT NULL,
-    "restriction_id" int REFERENCES "restriction" NOT NULL
+    "restriction_id" int REFERENCES "restriction" NOT NULL,
+    "active" boolean default False
 );
 
 --food table to store event's foods
