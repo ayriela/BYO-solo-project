@@ -92,7 +92,8 @@ Due to the tight timeline to scope, architect, and implement the initial build o
 - Include a display of the ingredients data for the food to the event detail page.
 - Have loval public events that are able to advertise on the site that users can join without an invitation. 
 
-
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
 
 ## Acknowledgement
 Thanks to Prime Digital Academy, the entire Scytale cohort, as well as the developers of the react-add-to-calendar and react-multi-email components. 
