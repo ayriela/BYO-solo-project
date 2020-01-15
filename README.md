@@ -1,5 +1,5 @@
 # B.Y.O.
-![MIT LICENSE](https://img.shields.io/github/repo-size/ayriela/BYO-solo-project.svg?style=flat-square)
+![MIT LICENSE](https://img.shields.io/github/license/ayriela/BYO-solo-project.svg?style=flat-square)
 ![REPO SIZE](https://img.shields.io/github/repo-size/ayriela/BYO-solo-project.svg?style=flat-square)
 ![TOP_LANGUAGE](https://img.shields.io/github/languages/top/ayriela/BYO-solo-project.svg?style=flat-square)
 ![FORKS](https://img.shields.io/github/forks/ayriela/BYO-solo-project.svg?style=social)
