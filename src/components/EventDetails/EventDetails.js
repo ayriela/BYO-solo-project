@@ -37,11 +37,30 @@ class userHome extends Component {
                         <Typography style={{color: '#97b498', textAlign: "center"}} variant="h6">Alerts! {this.props.selectedEvent.host_messages}</Typography>
                     </div>
                     <div className="basicDetail">
-                    <h1>{this.props.selectedEvent.title}</h1>
-                    <Typography>Description: {this.props.selectedEvent.description}</Typography>
-                    <Typography>Location: {this.props.selectedEvent.location}</Typography>
-                    <Typography>Date: {moment(this.props.selectedEvent.start_time).format('MM/DD/YYYY')}</Typography>
-                    <Typography>Time: {moment(this.props.selectedEvent.start_time).format('h:mm a')}-{moment(this.props.selectedEvent.end_time).format('h:mm a')}</Typography>
+                        <div className="eventDetail-left">
+                            <p className="detailTitle">{this.props.selectedEvent.title}</p>
+                            <p className="detailLabel" id="descriptionLabel">Description:</p>
+                            <p className="detailDescription">{this.props.selectedEvent.description}</p>
+                        </div>
+                       
+                        <div className="eventDetail-right">
+                            <table className="detailInfo">
+                                <tr>
+                                <td className="detailLabel">Location:</td> 
+                                <td className="detail">{this.props.selectedEvent.location}</td>
+                                </tr>
+                                <tr>
+                                <td className="detailLabel">Date: </td>
+                                <td className="detail">{moment(this.props.selectedEvent.start_time).format('MM/DD/YYYY')}</td>
+                                </tr>
+                                <tr>
+                                <td className="detailLabel">Time: </td>
+                                <td className="detail">{moment(this.props.selectedEvent.start_time).format('h:mm a')}-{moment(this.props.selectedEvent.end_time).format('h:mm a')}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    
+                    
                     </div>
                     <div className="flex-container">
                     <div className="eventDetail-left">

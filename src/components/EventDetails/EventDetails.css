@@ -3,7 +3,7 @@
 }
 
 .basicDetail{
-    width: 50%;
+    width: 100%;
 }
 
 .eventDetail-left{
@@ -71,4 +71,30 @@
 .resTable{
     width: 100%;
     color: #1a237e;
+}
+
+.detailLabel{
+    color: darkslategrey;
+    font-size: 12px; 
+    margin: 0px;
+}
+
+.detail, .detailDescription{
+    font-size: 15px;
+    margin: 2px;
+}
+#descriptionLabel{
+    padding-left: 4px;
+}
+.detailDescription{
+    padding-left: 4px;
+}
+
+.detailTitle{
+    font-size: 28px;
+    margin: 4px;
+}
+
+.detailInfo{
+    padding-top: 5px;
 }
