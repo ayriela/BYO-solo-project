@@ -12,7 +12,7 @@ Duration: 2 Week Project
 B.Y.O. is a web application for event planning that is designed to easily track and communicate the allergies or dietary restrictions of the attendees to the host and other guests. This also gives guests who have restrictions an idea of whether foods that accommodate their needs will be present. Foods can be added to events by guests or event hosts, and they walk through a form to flag their foods as safe or unsafe for various restrictions. This means other guests won't be left wondering if the salad at an event will actually have bacon, making it unsuitable as a vegetarian option. Instead a vegetarian guest can quickly see if they need to bring their own dish to the event or plan to eat beforehand.
 
 ### Deployed Link 
-[Heroku Deployed Version](https://byo-solo.herokuapp.com/#/home)
+[B.Y.O. on Heroku](https://byo-solo.herokuapp.com/#/home)
 - Feel free to register a new user or log in with the sample credential `test/test` to get a feel for the application.
 - Chrome is the supported browser for this version of the application.
 - Emails are stored but not used in this version so they don't need to be real email addresses you have access to
