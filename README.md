@@ -13,8 +13,9 @@ B.Y.O. is a web application for event planning that is designed to easily track 
 
 ### Deployed Link 
 [Heroku Deployed Version](https://byo-solo.herokuapp.com/#/home)
-Feel free to register a new user or log in with the sample credential `test/test` to get a feel for the application.
-Note: Emails are stored but not used in this version so they don't need to be real email addresses you have access to
+- Feel free to register a new user or log in with the sample credential `test/test` to get a feel for the application.
+- Chrome is the supported browser for this version of the application.
+- Emails are stored but not used in this version so they don't need to be real email addresses you have access to
 
 ## Screen Shots
 ### User's Home Page
